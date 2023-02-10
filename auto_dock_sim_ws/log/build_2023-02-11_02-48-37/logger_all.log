@@ -1,0 +1,265 @@
+[0.641s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.641s] DEBUG:colcon:Parsed command line arguments: Namespace(allow_overriding=[], ament_cmake_args=None, base_paths=['.'], build_base='build', catkin_cmake_args=None, catkin_skip_building_tests=False, cmake_args=None, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, cmake_target=None, cmake_target_skip_unavailable=False, continue_on_error=False, event_handlers=None, executor='parallel', ignore_user_meta=False, install_base='install', log_base=None, log_level=None, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f5a10743b20>>, merge_install=False, metas=['./colcon.meta'], packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_end=None, packages_ignore=None, packages_ignore_regex=None, packages_select=None, packages_select_build_failed=False, packages_select_by_dep=None, packages_select_regex=None, packages_select_test_failures=False, packages_skip=None, packages_skip_build_finished=False, packages_skip_by_dep=None, packages_skip_regex=None, packages_skip_test_passed=False, packages_skip_up_to=None, packages_start=None, packages_up_to=None, packages_up_to_regex=None, parallel_workers=8, paths=None, symlink_install=True, test_result_base=None, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f5a10743b20>, verb_name='build', verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f5a107500d0>)
+[0.717s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.717s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.717s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.717s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.717s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.717s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.717s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/waraset/auto_dock_sim_ws'
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.717s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.718s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.733s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extensions ['ignore', 'ignore_ament_install']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'ignore'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'ignore_ament_install'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extensions ['colcon_pkg']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'colcon_pkg'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extensions ['colcon_meta']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'colcon_meta'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extensions ['ros']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'ros'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extensions ['cmake', 'python']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'cmake'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'python'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extensions ['python_setup_py']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim) by extension 'python_setup_py'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extensions ['ignore', 'ignore_ament_install']
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'ignore'
+[0.734s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'ignore_ament_install'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extensions ['colcon_pkg']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'colcon_pkg'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extensions ['colcon_meta']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'colcon_meta'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extensions ['ros']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'ros'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extensions ['cmake', 'python']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'cmake'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'python'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extensions ['python_setup_py']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src) by extension 'python_setup_py'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extensions ['ignore', 'ignore_ament_install']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'ignore'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'ignore_ament_install'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extensions ['colcon_pkg']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'colcon_pkg'
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extensions ['colcon_meta']
+[0.735s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'colcon_meta'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extensions ['ros']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'ros'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extensions ['cmake', 'python']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'cmake'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'python'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extensions ['python_setup_py']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim) by extension 'python_setup_py'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extension 'ignore'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extension 'ignore_ament_install'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extensions ['colcon_pkg']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extension 'colcon_pkg'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extensions ['colcon_meta']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extension 'colcon_meta'
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extensions ['ros']
+[0.736s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/auto_dock_sim_py_pkg) by extension 'ros'
+[0.739s] DEBUG:colcon.colcon_core.package_identification:Package 'auto_dock_sim/src/auto_dock_sim_py_pkg' with type 'ros.ament_python' and name 'auto_dock_sim_py_pkg'
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extensions ['ignore', 'ignore_ament_install']
+[0.739s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'ignore'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'ignore_ament_install'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extensions ['colcon_pkg']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'colcon_pkg'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extensions ['colcon_meta']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'colcon_meta'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extensions ['ros']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'ros'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extensions ['cmake', 'python']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'cmake'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'python'
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extensions ['python_setup_py']
+[0.740s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar) by extension 'python_setup_py'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['ignore', 'ignore_ament_install']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'ignore'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'ignore_ament_install'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['colcon_pkg']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'colcon_pkg'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['colcon_meta']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'colcon_meta'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['ros']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'ros'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['cmake', 'python']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'cmake'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'python'
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['python_setup_py']
+[0.741s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_01-02-66) by extension 'python_setup_py'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['ignore', 'ignore_ament_install']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'ignore'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'ignore_ament_install'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['colcon_pkg']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'colcon_pkg'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['colcon_meta']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'colcon_meta'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['ros']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'ros'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['cmake', 'python']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'cmake'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'python'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['python_setup_py']
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_23-01-66) by extension 'python_setup_py'
+[0.742s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['ignore', 'ignore_ament_install']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'ignore'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'ignore_ament_install'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['colcon_pkg']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'colcon_pkg'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['colcon_meta']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'colcon_meta'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['ros']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'ros'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['cmake', 'python']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'cmake'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'python'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['python_setup_py']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/data_real_lidar/liadr_test_data_26-01-66) by extension 'python_setup_py'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extensions ['ignore', 'ignore_ament_install']
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'ignore'
+[0.743s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'ignore_ament_install'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extensions ['colcon_pkg']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'colcon_pkg'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extensions ['colcon_meta']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'colcon_meta'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extensions ['ros']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'ros'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extensions ['cmake', 'python']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'cmake'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'python'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extensions ['python_setup_py']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(auto_dock_sim/src/scripts_test_analys_data) by extension 'python_setup_py'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.744s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.745s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extensions ['ignore', 'ignore_ament_install']
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extension 'ignore'
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extension 'ignore_ament_install'
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extensions ['colcon_pkg']
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extension 'colcon_pkg'
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extensions ['colcon_meta']
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extension 'colcon_meta'
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extensions ['ros']
+[0.746s] Level 1:colcon.colcon_core.package_identification:_identify(src/auto_dock_sim_py_pkg) by extension 'ros'
+[0.747s] DEBUG:colcon.colcon_core.package_identification:Package 'src/auto_dock_sim_py_pkg' with type 'ros.ament_python' and name 'auto_dock_sim_py_pkg'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extensions ['ignore', 'ignore_ament_install']
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'ignore'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'ignore_ament_install'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extensions ['colcon_pkg']
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'colcon_pkg'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extensions ['colcon_meta']
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'colcon_meta'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extensions ['ros']
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'ros'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extensions ['cmake', 'python']
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'cmake'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'python'
+[0.747s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extensions ['python_setup_py']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar) by extension 'python_setup_py'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['ignore', 'ignore_ament_install']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'ignore'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'ignore_ament_install'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['colcon_pkg']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'colcon_pkg'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['colcon_meta']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'colcon_meta'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['ros']
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'ros'
+[0.748s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['cmake', 'python']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'cmake'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'python'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extensions ['python_setup_py']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_01-02-66) by extension 'python_setup_py'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['ignore', 'ignore_ament_install']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'ignore'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'ignore_ament_install'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['colcon_pkg']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'colcon_pkg'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['colcon_meta']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'colcon_meta'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['ros']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'ros'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['cmake', 'python']
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'cmake'
+[0.749s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'python'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extensions ['python_setup_py']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_23-01-66) by extension 'python_setup_py'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['ignore', 'ignore_ament_install']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'ignore'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'ignore_ament_install'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['colcon_pkg']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'colcon_pkg'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['colcon_meta']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'colcon_meta'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['ros']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'ros'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['cmake', 'python']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'cmake'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'python'
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extensions ['python_setup_py']
+[0.750s] Level 1:colcon.colcon_core.package_identification:_identify(src/data_real_lidar/liadr_test_data_26-01-66) by extension 'python_setup_py'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extensions ['ignore', 'ignore_ament_install']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'ignore'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'ignore_ament_install'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extensions ['colcon_pkg']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'colcon_pkg'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extensions ['colcon_meta']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'colcon_meta'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extensions ['ros']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'ros'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extensions ['cmake', 'python']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'cmake'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'python'
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extensions ['python_setup_py']
+[0.751s] Level 1:colcon.colcon_core.package_identification:_identify(src/scripts_test_analys_data) by extension 'python_setup_py'
+[0.751s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.751s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.751s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.751s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.752s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.810s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.810s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.828s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/waraset/auto_dock_sim_ws/install
+[0.831s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/waraset/neobotix_workspace/install
+[0.843s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 311 installed packages in /home/waraset/ros2_foxy/install
+[0.850s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 2 installed packages in /home/waraset/ros2_ws/install
+[0.854s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 305 installed packages in /opt/ros/foxy
+[0.867s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.983s] ERROR:colcon:colcon build: Duplicate package names not supported:
+- auto_dock_sim_py_pkg:
+  - auto_dock_sim/src/auto_dock_sim_py_pkg
+  - src/auto_dock_sim_py_pkg

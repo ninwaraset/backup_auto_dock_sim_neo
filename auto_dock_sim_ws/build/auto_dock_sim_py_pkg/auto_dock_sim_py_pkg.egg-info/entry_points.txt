@@ -1,0 +1,4 @@
+[console_scripts]
+01_pub = auto_dock_sim_py_pkg.01_pub:main
+my_node = auto_dock_sim_py_pkg.my_node:main
+

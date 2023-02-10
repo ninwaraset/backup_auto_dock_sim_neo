@@ -1,0 +1,25 @@
+[2.241s] Invoking command in '/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/prefix_override:/home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/build --no-deps install_data
+[3.100s] running develop
+[3.417s] running egg_info
+[3.417s] creating auto_dock_sim_py_pkg.egg-info
+[3.418s] writing auto_dock_sim_py_pkg.egg-info/PKG-INFO
+[3.418s] writing dependency_links to auto_dock_sim_py_pkg.egg-info/dependency_links.txt
+[3.418s] writing entry points to auto_dock_sim_py_pkg.egg-info/entry_points.txt
+[3.418s] writing requirements to auto_dock_sim_py_pkg.egg-info/requires.txt
+[3.418s] writing top-level names to auto_dock_sim_py_pkg.egg-info/top_level.txt
+[3.431s] writing manifest file 'auto_dock_sim_py_pkg.egg-info/SOURCES.txt'
+[3.478s] reading manifest file 'auto_dock_sim_py_pkg.egg-info/SOURCES.txt'
+[3.478s] writing manifest file 'auto_dock_sim_py_pkg.egg-info/SOURCES.txt'
+[3.543s] running build_ext
+[3.543s] Creating /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages/site.py
+[3.548s] Creating /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages/auto-dock-sim-py-pkg.egg-link (link to .)
+[3.548s] Installing my_node script to /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/auto_dock_sim_py_pkg
+[3.549s] 
+[3.549s] Installed /home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg
+[3.549s] running install_data
+[3.549s] creating /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/share/ament_index
+[3.550s] creating /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/share/ament_index/resource_index
+[3.550s] creating /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/share/ament_index/resource_index/packages
+[3.550s] copying resource/auto_dock_sim_py_pkg -> /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/share/ament_index/resource_index/packages
+[3.550s] copying package.xml -> /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/share/auto_dock_sim_py_pkg
+[3.603s] Invoked command in '/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg' returned '0': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/prefix_override:/home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/build --no-deps install_data
