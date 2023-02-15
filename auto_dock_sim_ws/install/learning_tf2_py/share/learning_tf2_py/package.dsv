@@ -1,0 +1,9 @@
+source;share/learning_tf2_py/hook/pythonpath.ps1
+source;share/learning_tf2_py/hook/pythonpath.dsv
+source;share/learning_tf2_py/hook/pythonpath.sh
+source;share/learning_tf2_py/hook/ament_prefix_path.ps1
+source;share/learning_tf2_py/hook/ament_prefix_path.dsv
+source;share/learning_tf2_py/hook/ament_prefix_path.sh
+source;../../build/learning_tf2_py/share/learning_tf2_py/hook/pythonpath_develop.ps1
+source;../../build/learning_tf2_py/share/learning_tf2_py/hook/pythonpath_develop.dsv
+source;../../build/learning_tf2_py/share/learning_tf2_py/hook/pythonpath_develop.sh

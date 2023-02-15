@@ -11,14 +11,14 @@ import math
 from os.path import expanduser as os
 import numpy as np
 from sklearn.cluster import DBSCAN
-from sklearn import metrics
+# from sklearn import metrics
 def plot_check_cluster(i_number):
     zero = "0"
     if len(str(i_number)) >1:
         zero = ""
     
 
-    df = pd.read_excel(os('~/neobotix_workspace/src/liadr_test_data_'+date_data +'/data_'+str(zero)+str(i_number)+'.xls'))
+    df = pd.read_excel(os('~/auto_dock_sim_ws/src/data_real_lidar/liadr_test_data_'+date_data +'/data_'+str(zero)+str(i_number)+'.xls'))
     x_list = (df['x'].tolist())
     y_list = (df['y'].tolist())
     # x_list_100 = x_list*100

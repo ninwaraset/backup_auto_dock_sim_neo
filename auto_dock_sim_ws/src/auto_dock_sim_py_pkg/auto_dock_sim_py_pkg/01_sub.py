@@ -13,12 +13,19 @@ class SubscriberClass(Node):
         self.subscription = self.create_subscription(
             Odometry,
             '/odom',
+            # '/amcl_pose',
             self.listener_callback,
             10)
         self.subscription  # prevent unused variable warning
 
     def listener_callback(self, msg):
-        print(msg.pose.pose)
+        dcm = 4
+        print("tran x : " +str(round(msg.pose.pose.position.x,dcm)))
+        print("tran y : " +str(round(msg.pose.pose.position.y,dcm)))
+        print("rot z : " +str(round((msg.pose.pose.orientation.z)*180,dcm)))
+        print("++++++++++++++++++++++++++++++++++++++++++++++++")
+
+
 
 
 def main(args=None):

@@ -4,8 +4,9 @@ setup.py
 auto_dock_sim_py_pkg/01_pub.py
 auto_dock_sim_py_pkg/01_sub.py
 auto_dock_sim_py_pkg/__init__.py
-auto_dock_sim_py_pkg/fn_print.py
 auto_dock_sim_py_pkg/my_node.py
+auto_dock_sim_py_pkg/st_check_goal.py
+auto_dock_sim_py_pkg/st_scan.py
 auto_dock_sim_py_pkg.egg-info/PKG-INFO
 auto_dock_sim_py_pkg.egg-info/SOURCES.txt
 auto_dock_sim_py_pkg.egg-info/dependency_links.txt

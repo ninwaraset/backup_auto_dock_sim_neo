@@ -1,0 +1,18 @@
+[3.311s] Invoking command in '/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/prefix_override:/home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/build --no-deps install_data
+[4.171s] running develop
+[4.451s] running egg_info
+[4.451s] writing auto_dock_sim_py_pkg.egg-info/PKG-INFO
+[4.451s] writing dependency_links to auto_dock_sim_py_pkg.egg-info/dependency_links.txt
+[4.452s] writing entry points to auto_dock_sim_py_pkg.egg-info/entry_points.txt
+[4.452s] writing requirements to auto_dock_sim_py_pkg.egg-info/requires.txt
+[4.452s] writing top-level names to auto_dock_sim_py_pkg.egg-info/top_level.txt
+[4.501s] reading manifest file 'auto_dock_sim_py_pkg.egg-info/SOURCES.txt'
+[4.501s] writing manifest file 'auto_dock_sim_py_pkg.egg-info/SOURCES.txt'
+[4.560s] running build_ext
+[4.561s] Creating /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages/auto-dock-sim-py-pkg.egg-link (link to .)
+[4.562s] Installing 01_pub script to /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/auto_dock_sim_py_pkg
+[4.562s] Installing my_node script to /home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/auto_dock_sim_py_pkg
+[4.562s] 
+[4.562s] Installed /home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg
+[4.563s] running install_data
+[4.646s] Invoked command in '/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg' returned '0': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/prefix_override:/home/waraset/auto_dock_sim_ws/install/auto_dock_sim_py_pkg/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/auto_dock_sim_py_pkg/build --no-deps install_data

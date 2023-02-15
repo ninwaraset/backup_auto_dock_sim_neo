@@ -1,0 +1,24 @@
+[3.173s] Invoking command in '/home/waraset/auto_dock_sim_ws/build/learning_tf2_py': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/learning_tf2_py/prefix_override:/home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/learning_tf2_py/build --no-deps install_data
+[4.051s] running develop
+[4.344s] running egg_info
+[4.344s] creating learning_tf2_py.egg-info
+[4.345s] writing learning_tf2_py.egg-info/PKG-INFO
+[4.345s] writing dependency_links to learning_tf2_py.egg-info/dependency_links.txt
+[4.345s] writing entry points to learning_tf2_py.egg-info/entry_points.txt
+[4.345s] writing requirements to learning_tf2_py.egg-info/requires.txt
+[4.345s] writing top-level names to learning_tf2_py.egg-info/top_level.txt
+[4.357s] writing manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+[4.400s] reading manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+[4.400s] writing manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+[4.463s] running build_ext
+[4.464s] Creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages/site.py
+[4.468s] Creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages/learning-tf2-py.egg-link (link to .)
+[4.469s] 
+[4.469s] Installed /home/waraset/auto_dock_sim_ws/build/learning_tf2_py
+[4.469s] running install_data
+[4.469s] creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/share/ament_index
+[4.469s] creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/share/ament_index/resource_index
+[4.469s] creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/share/ament_index/resource_index/packages
+[4.470s] copying resource/learning_tf2_py -> /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/share/ament_index/resource_index/packages
+[4.470s] copying package.xml -> /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/share/learning_tf2_py
+[4.528s] Invoked command in '/home/waraset/auto_dock_sim_ws/build/learning_tf2_py' returned '0': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/learning_tf2_py/prefix_override:/home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/learning_tf2_py/build --no-deps install_data

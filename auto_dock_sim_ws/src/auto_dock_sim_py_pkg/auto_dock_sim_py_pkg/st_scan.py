@@ -6,14 +6,12 @@ from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from std_msgs.msg import String
 import math
-import xlrd
-from xlrd import open_workbook
-import xlwt
+# import xlrd
+# from xlrd import open_workbook
+# import xlwt
 from tempfile import TemporaryFile
 from geometry_msgs.msg import Pose, Point, Quaternion, Vector3, Polygon
-# from tf import transformations # rotation_matrix(), concatenate_matrices()
 
-# import rviz_tools_py as rviz_tools
 from visualization_msgs.msg import Marker
 
 import matplotlib.pyplot as plt
@@ -39,8 +37,8 @@ class SubscriberClass(Node):
         self.cmd_publisher = self.create_publisher(String, 'topic', 10)
         self.marker_publisher = self.create_publisher(Marker, 'marker', 10)
         self.timer = self.create_timer(0.1, self.timer_callback)
-        self.key_1 = False
-        self.key_2 = True
+        # self.key_1 = False
+        
         self.point_from_scan = []
         self.amcl_rot = Twist()
         self.list_amcl_linear = [0.0,0.0,0.0]
@@ -48,28 +46,11 @@ class SubscriberClass(Node):
         self.stack_x = []
         self.stack_y = []
 
-        # for i in range(2):
-        #     self.stack_x.append(0)
-        #     self.stack_y.append(0)
-
-        # self.all_stack_x = []
-        # self.all_stack_y = []
-
-        # self.avg_all_stack_x = []
-        # self.avg_all_stack_y = []
-
-        # for i in range(720):
-        #     self.all_stack_x.append([])
-        #     self.all_stack_y.append([])
-
-        #     self.avg_all_stack_x.append([])
-        #     self.avg_all_stack_y.append([])
-
-        # print(self.all_stack_x)
-        self.key_1 = 1
-
+        self.key_1 = 10
+        self.key_2 = 1
+        self.stack_theta = []
     def listener_callback_1(self, msg):
-        # print(self.list_amcl_angular[2])
+        
         
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################       
@@ -298,14 +279,82 @@ class SubscriberClass(Node):
             return true_index_vertex_point_tri_of_cluster,label_cluster_charger,list_dif_line
 
         def cal_theta_distance(x_list,y_list,idx_vtx_tri,origin_x=0,origin_y=0):
-            origin_dif_x = origin_x - x_list[idx_vtx_tri]
-            origin_dif_y = origin_y - y_list[idx_vtx_tri]
+            origin_dif_x = abs(origin_x - x_list[idx_vtx_tri])
+            origin_dif_y = abs(origin_y - y_list[idx_vtx_tri])
             origin_pow_dif_x = origin_dif_x**2
             origin_pow_dif_y = origin_dif_y**2
             dis_origin = math.sqrt(origin_pow_dif_x + origin_pow_dif_y)
             slope_origin = origin_dif_y/origin_dif_x 
             theta_origin = math.atan(slope_origin)
             return dis_origin,theta_origin
+        
+
+        def split_r_l_charger(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri):
+            plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
+            fig = plt.gcf()
+            ax = fig.gca()
+            circle2 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), 0.2, color='m', fill=False)
+            ax = plt.gca()
+            # ax.cla() # clear things for fresh plot
+            ax.add_patch(circle2)
+            list_idx_charger = cluster_dict[label_charger]
+            itls_idx_list = []
+            for i in range(len(list_idx_charger)):
+                dif_x = x_list[idx_vtx_tri]-x_list[list_idx_charger[i]]
+                dif_y = y_list[idx_vtx_tri]-y_list[list_idx_charger[i]]
+                pow_dif_x = dif_x**2
+                pow_dif_y = dif_y**2
+                dis_xy = math.sqrt(pow_dif_x+pow_dif_y)
+                if dis_xy <= 0.2 :
+                    itls_idx_list.append(list_idx_charger[i])
+
+            # print( itls_idx_list)
+            r_idx_list = []
+            l_idx_list = []
+            point_r_x = []
+            point_r_y = []
+            point_l_x = []
+            point_l_y = []
+
+            for i in range(len(itls_idx_list)):
+                if itls_idx_list[i] >= idx_vtx_tri:
+                    r_idx_list.append( itls_idx_list[i])
+                    point_r_x.append(x_list[itls_idx_list[i]])
+                    point_r_y.append(y_list[itls_idx_list[i]])
+                if itls_idx_list[i] <= idx_vtx_tri:
+                    l_idx_list.append( itls_idx_list[i])
+                    point_l_x.append(x_list[itls_idx_list[i]])
+                    point_l_y.append(y_list[itls_idx_list[i]])
+                    
+            # print("R : "+str(r_idx_list))
+            # print("L : "+str(l_idx_list))
+            # print(r_idx_list[-1])
+
+            ################## will change linear reg for real line *fix
+            line_r_x = [x_list[r_idx_list[0]],x_list[r_idx_list[-1]]]
+            line_r_y = [y_list[r_idx_list[0]],y_list[r_idx_list[-1]]]
+            # line_r_y = [y_list[r_idx_list[0]],y_list[idx_vtx_tri]]
+
+            line_l_x = [x_list[l_idx_list[0]],x_list[l_idx_list[-1]]]
+            line_l_y = [y_list[l_idx_list[0]],y_list[l_idx_list[-1]]]
+            # plt.xlim([-1.5, 1.5])
+            # plt.ylim([-0.5,1.5])
+            # plt.show()
+            # plt.cla()
+            # plt.plot(point_r_x,point_r_y,"g^")
+            # plt.plot(point_l_x,point_l_y,"y*")
+            plt.plot(line_r_x,line_r_y,'r')
+            plt.plot(line_l_x,line_l_y,'b')
+            
+            line_base_clean_x = [x_list[l_idx_list[0]],x_list[r_idx_list[-1]]]
+            line_base_clean_y = [y_list[l_idx_list[0]],y_list[r_idx_list[-1]]]
+            plt.plot(line_base_clean_x,line_base_clean_y,'g')
+            center_base_clean_x = sum( line_base_clean_x)/2
+            center_base_clean_y = sum( line_base_clean_y)/2
+            plt.plot(center_base_clean_x,center_base_clean_y,'k*')
+
+            # plt.show()
+            return r_idx_list , l_idx_list
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################       
 ##########################################################################################################################################################################
@@ -321,28 +370,49 @@ class SubscriberClass(Node):
 
             plt.plot([0,x_list[idx_vtx_tri]],[0,y_list[idx_vtx_tri]],"b")
             print(list_dif_line)
+            
+            plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
+            r,t = cal_theta_distance(x_list,y_list,idx_vtx_tri)
+            print(t)
+            t = t-(math.pi)/2
+            print(t)
+            print("xy : ",[x_list[idx_vtx_tri],y_list[idx_vtx_tri]])
+            print("distance ,theta(degree) : ",[r,((t*180)/math.pi)])
+            print("distance ,theta(radian) : ",[r,t])
+            
+            x_cal =r*math.cos(t) 
+            y_cal = r*math.sin(t)
+            
+            goal_x = x_list[idx_vtx_tri]
+            goal_y = y_list[idx_vtx_tri]
+            print("xy cal : ",[x_cal,y_cal])
+
+
+            split_r_l_charger(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri)
+
             if list_dif_line == [] :
                 print("ERROR NOT FONUD -----------------------------------------------------------------------------------")
             else:
                 print("FOUNDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-            plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
-            r,t = cal_theta_distance(x_list,y_list,idx_vtx_tri)
-
-            print("xy : ",[x_list[idx_vtx_tri],y_list[idx_vtx_tri]])
-            print("distance ,theta : ",[r,t])
-            x_cal =r*math.cos(t) 
-            y_cal = r*math.sin(t)
-            print("xy cal : ",[x_cal,y_cal])
+                self.stack_theta.append(t*180/math.pi)
+                self.key_1 -= 1
+                # print(self.key_1)
             plt.show()
 
         # call_scan
         # plt.plot(x[index_vertex_point_tri_of_cluster],y[index_vertex_point_tri_of_cluster],"ro")
         
         # # pass
-        if self.key_1:
+        if self.key_1 > 0:
             print("scan") 
             call_scan()
-            self.key_1 = 0
+            
+        elif self.key_1 == 0:
+            if self.key_2 > 0:
+                print(self.stack_theta)
+                print((sum(self.stack_theta)/10))
+                
+                self.key_2 = 0
 
     def listener_callback_2(self, msg):
         # print(msg.data)
@@ -370,49 +440,8 @@ class SubscriberClass(Node):
     
     def timer_callback(self):
 
-        ##########################################
-        ##########################################
-
-        # plt.figure()
         pass
-        # marker = Marker()
-        # marker.header.frame_id = '/map'
-        # marker.id = 4
-        # marker.type = marker.LINE_STRIP
-        # marker.text = "text"
-        # marker.action = marker.ADD
-        # marker.scale.x = 0.05
-        # marker.scale.y = 0.05
-        # marker.scale.z = 0.05
-        # marker.color.a = 1.0
-        # marker.color.r = 1.0
-        # marker.color.g = 0.0
-        # marker.color.b = 0.0
-        # # marker.lifetime = rospy.Duration(duration)
-        # marker.pose.orientation.w = 1.0
-        # marker.pose.position.x = 0.5
-        # marker.pose.position.y = 0.0
-        # marker.pose.position.z = 0.0
-        # # marker line points
-        # marker.points = []
-        # # print(len(self.point_from_scan[0]))
-        # if (len(self.point_from_scan)) != 0: 
-        #     for i in range(len(self.point_from_scan[0])-10):
-        #         # print(i)
-        #         # first point
-        #         first_line_point = Point()
-        #         first_line_point.x = self.point_from_scan[0][i]
-        #         first_line_point.y = self.point_from_scan[1][i]
-        #         first_line_point.z = 0.0
-        #         marker.points.append(first_line_point)
-        #         # second point
-        #         second_line_point = Point()
-        #         second_line_point.x = self.point_from_scan[0][i+10]
-        #         second_line_point.y = self.point_from_scan[1][i+10]
-        #         second_line_point.z = 0.0
-        #         marker.points.append(second_line_point)
-        #         self.marker_publisher.publish(marker)
-        # pass
+        
 
 
 def main(args=None):
