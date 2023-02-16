@@ -93,6 +93,7 @@ class SubscriberClass(Node):
     
             return x,y
 
+
         def lidar_DBscan(x_list,y_list,eps_value=0.04,min_samples_value=5,show_plot = 1):
             lidar_list = []
             for i in range(len(x_list)):
@@ -163,6 +164,7 @@ class SubscriberClass(Node):
                 # plt.title(f"Estimated number of clusters: {n_clusters_}")
                 ### plt.show()
             return cluster_dict 
+     
         
         def check_charger(x_list,y_list, cluster_dict,threshold_base =0.50,e_base = 0.1,threshold_high = 0.15,threshold_l_r_line = 0.05):
             true_index_vertex_point_tri_of_cluster = 0
@@ -278,6 +280,7 @@ class SubscriberClass(Node):
             # print("dis_list"+str(dis_list))
             return true_index_vertex_point_tri_of_cluster,label_cluster_charger,list_dif_line
 
+
         def cal_theta_distance(x_list,y_list,idx_vtx_tri,origin_x=0,origin_y=0):
             origin_dif_x = abs(origin_x - x_list[idx_vtx_tri])
             origin_dif_y = abs(origin_y - y_list[idx_vtx_tri])
@@ -293,10 +296,14 @@ class SubscriberClass(Node):
             plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
             fig = plt.gcf()
             ax = fig.gca()
-            circle2 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), 0.2, color='m', fill=False)
-            ax = plt.gca()
+            circle1 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), 0.2, color='m', fill=False)
+            # circle3 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), 0.35, color='g', fill=False)
+            
+            # ax = plt.gca()
             # ax.cla() # clear things for fresh plot
-            ax.add_patch(circle2)
+            ax.add_patch(circle1)
+            # ax.add_patch(circle3)
+            
             list_idx_charger = cluster_dict[label_charger]
             itls_idx_list = []
             for i in range(len(list_idx_charger)):
@@ -352,9 +359,65 @@ class SubscriberClass(Node):
             center_base_clean_x = sum( line_base_clean_x)/2
             center_base_clean_y = sum( line_base_clean_y)/2
             plt.plot(center_base_clean_x,center_base_clean_y,'k*')
+            
+            plt.plot([x_list[idx_vtx_tri],center_base_clean_x],[y_list[idx_vtx_tri],center_base_clean_y],'g')
+            slope_vg = (y_list[idx_vtx_tri]-center_base_clean_y)/(x_list[idx_vtx_tri]-center_base_clean_x)
+            theta_vg = math.atan(slope_vg)
+            print("--> slope_vg : "+str(slope_vg))
+            print("--> theta_vg : "+str(theta_vg))
 
+            origin_x = 0
+            origin_y = 0
+
+            vertex_x = x_list[idx_vtx_tri]
+            vertex_y = y_list[idx_vtx_tri]
+
+            tran_x = vertex_x
+            tran_y = vertex_y
+
+            line_1_x = [origin_x,tran_x]
+            line_1_y = [origin_y,tran_y]
+
+
+            # theta_rot = -math.pi*2/3
+            # dist_rot = 1
+            if theta_vg >= 0 :
+                theta_rot = theta_vg - math.pi
+            else :
+                theta_rot =  theta_vg
+            dist_rot = 0.35
+            circle2 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), dist_rot,ls = "--", color='g', fill=False)
+            ax.add_patch(circle2)
+
+            blue_x = dist_rot*math.cos(theta_rot) + tran_x
+            blue_y = dist_rot*math.sin(theta_rot) + tran_y
+            print("--> blue_point : "+str([blue_x,blue_y]))
+
+            line_2_x = [tran_x,blue_x]
+            line_2_y = [tran_y,blue_y]
+
+            # plt.plot(origin_x,origin_y,marker="o",color="g")
+            # plt.plot(tran_x,tran_y,marker="^",color="r")
+            # plt.plot(line_1_x,line_1_y,ls = "-", color='y')
+
+            plt.plot(blue_x,blue_y,marker="*",color="b")
+            plt.plot(line_2_x,line_2_y,ls = "-", color='m')
             # plt.show()
             return r_idx_list , l_idx_list
+        
+        def traj_point(x_list,y_list,idx_vtx_tri,dis_origin,theta_origin):
+            traj_base_x = dis_origin * math.cos(theta_origin)
+            traj_base_y = 0
+            traj_high_x = traj_base_x + 0
+            traj_high_y = traj_base_y + (dis_origin * math.sin(theta_origin))
+            
+            # plt.plot([0,traj_base_x],[0,traj_base_y],'k')
+            # plt.plot([traj_base_x,traj_high_x],[traj_base_y,traj_high_y],'k')
+            
+            
+            
+            
+            
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################       
 ##########################################################################################################################################################################
@@ -367,7 +430,7 @@ class SubscriberClass(Node):
             cluster_dict = lidar_DBscan(x_list,y_list,eps_value=0.04,min_samples_value=5)
             # print(cluster_dict)
             idx_vtx_tri,label_charger,list_dif_line = check_charger(x_list,y_list, cluster_dict)
-
+            plt.plot(0,0,"r^")
             plt.plot([0,x_list[idx_vtx_tri]],[0,y_list[idx_vtx_tri]],"b")
             print(list_dif_line)
             
@@ -376,7 +439,9 @@ class SubscriberClass(Node):
             print(t)
             t = t-(math.pi)/2
             print(t)
+
             print("xy : ",[x_list[idx_vtx_tri],y_list[idx_vtx_tri]])
+
             print("distance ,theta(degree) : ",[r,((t*180)/math.pi)])
             print("distance ,theta(radian) : ",[r,t])
             
@@ -385,11 +450,11 @@ class SubscriberClass(Node):
             
             goal_x = x_list[idx_vtx_tri]
             goal_y = y_list[idx_vtx_tri]
-            print("xy cal : ",[x_cal,y_cal])
-
-
+            # print("xy cal : ",[x_cal,y_cal])
+            # plt.plot(x_cal,y_cal,"r*")
+            dis_origin,theta_origin = cal_theta_distance(x_list,y_list,idx_vtx_tri)
             split_r_l_charger(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri)
-
+            traj_point(x_list,y_list,idx_vtx_tri,dis_origin,theta_origin)
             if list_dif_line == [] :
                 print("ERROR NOT FONUD -----------------------------------------------------------------------------------")
             else:
@@ -424,13 +489,13 @@ class SubscriberClass(Node):
 
 
     def listener_callback_3(self, msg):
-
-        self.list_amcl_linear[0] = msg.pose.pose.position.x
-        self.list_amcl_linear[1] = msg.pose.pose.position.y
-        self.list_amcl_linear[2] = msg.pose.pose.position.z
-        self.list_amcl_angular[0] = msg.pose.pose.orientation.x
-        self.list_amcl_angular[1] = msg.pose.pose.orientation.y
-        self.list_amcl_angular[2] = msg.pose.pose.orientation.z
+        pass
+        # self.list_amcl_linear[0] = msg.pose.pose.position.x
+        # self.list_amcl_linear[1] = msg.pose.pose.position.y
+        # self.list_amcl_linear[2] = msg.pose.pose.position.z
+        # self.list_amcl_angular[0] = msg.pose.pose.orientation.x
+        # self.list_amcl_angular[1] = msg.pose.pose.orientation.y
+        # self.list_amcl_angular[2] = msg.pose.pose.orientation.z
 
         # print("pose current : "+str(self.list_amcl_linear)+str(self.list_amcl_angular))
 
@@ -461,4 +526,3 @@ if __name__ == '__main__':
     # print("4")
     
     main()
-
