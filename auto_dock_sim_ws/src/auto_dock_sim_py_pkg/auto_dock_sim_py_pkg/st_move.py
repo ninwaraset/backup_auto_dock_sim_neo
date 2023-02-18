@@ -95,6 +95,7 @@ class Dummy(Node):
     #     print(f"Current ROS 2 system time: "+str(nanoseconds)+" seconds")
 
     def listener_callback_1(self,msg):
+        print("msg_recived : " + str(msg))
         pass
         
 
