@@ -45,8 +45,8 @@ class SubscriberClass(Node):
         # self.list_amcl_angular = [0.0,0.0,0.0]
         # self.stack_x = []
         # self.stack_y = []
-
-        self.round_scan = 10
+        self.round_scan_init = 50
+        self.round_scan = self.round_scan_init
         self.avg_scan = 1
         self.stack_theta_vertex = []
         self.stack_distance_vertex = []
@@ -265,18 +265,31 @@ class SubscriberClass(Node):
             return true_index_vertex_point_tri_of_cluster,label_cluster_charger,list_dif_line
 
 
-        def cal_theta_distance(x_list,y_list,idx_vtx_tri,origin_x=0,origin_y=0):
-            origin_dif_x = abs(origin_x - x_list[idx_vtx_tri])
-            origin_dif_y = abs(origin_y - y_list[idx_vtx_tri])
+        def cal_theta_distance(x,y,origin_x=0,origin_y=0):
+            origin_dif_x = (origin_x - x)
+            origin_dif_y = (origin_y - y)
+            # origin_dif_x = abs(origin_x - x)
+            # origin_dif_y = abs(origin_y - y)
             origin_pow_dif_x = origin_dif_x**2
             origin_pow_dif_y = origin_dif_y**2
             dis_origin = math.sqrt(origin_pow_dif_x + origin_pow_dif_y)
             slope_origin = origin_dif_y/origin_dif_x 
             theta_origin = math.atan(slope_origin)
+            # if abs(x) < 0.02:
+            #     theta_origin = 0
+            #     print(" in yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+            # else:
+            if (x < 0): 
+                # theta_origin =  - theta_origin
+                theta_origin = theta_origin + math.pi/2
+            else :
+                theta_origin = theta_origin - math.pi/2
+            # theta_origin = theta_origin - math.pi/2
+                
             return dis_origin,theta_origin
         
 
-        def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18):
+        def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18,distance_blue= 0.4):
             print("\n++ SET SUB GOAL ++")
             plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
             fig = plt.gcf()
@@ -370,7 +383,7 @@ class SubscriberClass(Node):
                 theta_rot = theta_vg - math.pi
             else :
                 theta_rot =  theta_vg
-            dist_rot = 0.35
+            dist_rot = distance_blue
             circle2 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), dist_rot,ls = "--", color='g', fill=False)
             ax.add_patch(circle2)
 
@@ -419,10 +432,12 @@ class SubscriberClass(Node):
                 print("  _______\n\n | FOUND | \n  _______\n")
                 plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r*")
 
-                distance_vertex,theta_vertex = cal_theta_distance(x_list,y_list,idx_vtx_tri)
+                distance_vertex,theta_vertex = cal_theta_distance(x_list[idx_vtx_tri],y_list[idx_vtx_tri])
 
                 print("c-> theta before rotate in z axis : "+ str(theta_vertex))
-                theta_vertex = theta_vertex-(math.pi)/2
+                # theta_vertex = theta_vertex-(math.pi)/2
+                # theta_vertex = theta_vertex-math.pi/2
+
                 print("c-> theta after rotate in z axis: "+ str(theta_vertex))
 
                 print("c-> xy vertex point : ",[x_list[idx_vtx_tri],y_list[idx_vtx_tri]])
@@ -443,20 +458,30 @@ class SubscriberClass(Node):
 
                 self.stack_theta_vertex.append(theta_vertex)
                 self.stack_distance_vertex.append(distance_vertex)
-                self.round_scan -= 1
+                
+
+
                 blue_x,blue_y= set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri)
                 print("c->blue piont : "+str([blue_x,blue_y]))
-                theta_blue = math.atan((blue_y/blue_x))
-                distance_blue = math.sqrt(((blue_x**2)+(blue_x**2)))
+                distance_blue,theta_blue = cal_theta_distance(blue_x,blue_y)
+
+                # theta_blue = theta_blue
+
                 theta_blue_degree = ((theta_blue*180)/math.pi)
+
 
 
                 print("c-> theta_blue(radius) : "+str(theta_blue))
                 print("c-> theta_blue(degree) : "+str(theta_blue_degree))
                 print("c-> distance_blue : "+str(distance_blue))
-                self.stack_theta_blue.append(theta_blue_degree)
+                # self.stack_theta_blue.append(theta_blue_degree)
+                self.stack_theta_blue.append(theta_blue)
                 self.stack_distance_blue.append(distance_blue)
+
+
                 # print(self.round_scan)
+                self.round_scan -= 1
+
             # plt.show()
 
         # call_scan
@@ -473,21 +498,23 @@ class SubscriberClass(Node):
             if self.avg_scan > 0:
                 print("\n ----- avg ----- \n")
                 print("stack_theta_vertex : \n"+str(self.stack_theta_vertex))
-                print("avg stack_theta_vertex: "+str(sum(self.stack_theta_vertex)/10))
+                print("avg stack_theta_vertex: "+str(sum(self.stack_theta_vertex)/self.round_scan_init))
                 
                 print("")
                 print("stack_distance_vertex : \n"+str(self.stack_distance_vertex))
-                print("avg stack_distance_vertex: "+str(sum(self.stack_distance_vertex)/10))
+                print("avg stack_distance_vertex: "+str(sum(self.stack_distance_vertex)/self.round_scan_init))
 
                 print("")
                 print("stack_theta_blue : \n"+str(self.stack_theta_blue))
-                print("avg stack_theta_blue : "+str(sum(self.stack_theta_blue)/10))
+                print("avg stack_theta_blue : "+str(sum(self.stack_theta_blue)/self.round_scan_init))
 
                 print("")
                 print("self.stack_distance_blue : \n"+str(self.stack_distance_blue))
-                print("avg self.stack_distance_blue : "+str(sum(self.stack_distance_blue)/10))
+                print("avg self.stack_distance_blue : "+str(sum(self.stack_distance_blue)/self.round_scan_init))
         
                 self.avg_scan = 0
+                SubscriberClass().destroy_node()
+                rclpy.shutdown()
 
     def listener_callback_2(self, msg):
         # print(msg.data)

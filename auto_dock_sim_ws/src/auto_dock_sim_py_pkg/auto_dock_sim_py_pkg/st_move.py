@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from rclpy.clock import Clock
+import math
 
 class Dummy(Node):
     def __init__(self):
@@ -12,7 +13,15 @@ class Dummy(Node):
         # self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
 
         print("st_move")
-        self.move(type_move="linear",distance=1,speed=0.5)
+        distance_angular_move1 = -0.4671337311868534
+        distance_linear_move1 = 1.1155676269498194
+        speed_move1 = 0.02
+        self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
+        self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
+        self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
+
+        # Dummy().destroy_node()
+        # rclpy.shutdown()
         # self.timer_period = 0.5
         # self.timer = self.create_timer(self.timer_period,self.timer_calback)
         # self.num = self.timer_period
@@ -56,7 +65,7 @@ class Dummy(Node):
             time_d = 0
             while(abs(current_distance) <abs(distance)):
                 # print("moving")
-                # print("current_distance"+str(current_distance))
+                print("current_distance"+str(current_distance))
                 #Publish the velocity
                 
                 self.cmd_publisher.publish(msg)
