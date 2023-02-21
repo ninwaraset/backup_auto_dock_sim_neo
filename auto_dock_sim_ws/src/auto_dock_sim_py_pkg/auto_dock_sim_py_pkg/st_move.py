@@ -13,8 +13,8 @@ class Dummy(Node):
         # self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
 
         print("st_move")
-        distance_angular_move1 = -0.4671337311868534
-        distance_linear_move1 = 1.1155676269498194
+        distance_angular_move1 = -0.4742537548612439
+        distance_linear_move1 = 1.1163597437568331
         speed_move1 = 0.02
         self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
         self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)

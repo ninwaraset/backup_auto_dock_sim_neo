@@ -13,7 +13,7 @@ from tempfile import TemporaryFile
 from geometry_msgs.msg import Pose, Point, Quaternion, Vector3, Polygon
 
 from visualization_msgs.msg import Marker
-
+from std_msgs.msg import Float32
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from geometry_msgs.msg import PoseWithCovarianceStamped
@@ -22,13 +22,26 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 fig, ax = plt.subplots()
         
-class SubscriberClass(Node):
+class SCAN(Node):
     # print("1")
 
     def __init__(self):
         # print("2")
         super().__init__('state_scan')
         self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
+
+
+        
+        self.vertex_distance_publisher = self.create_publisher(Float32,'/vertex_distance',10)
+        self.vertex_theta_publisher = self.create_publisher(Float32,'/vertex_theta',10)
+        
+        self.blue_distance_publisher = self.create_publisher(Float32,'/blue_distance',10)
+        self.blue_theta_publisher = self.create_publisher(Float32,'/blue_theta',10)
+
+        time_period_pub = 0.1
+        self.timer = self.create_timer(time_period_pub,self.timer_callback)
+
+
    
         # self.subscription_2 = self.create_subscription(String,'/nav/state',self.listener_callback_2,10)
         # self.subscription_3 = self.create_subscription(PoseWithCovarianceStamped,'/amcl_pose',self.listener_callback_3,10)
@@ -53,6 +66,14 @@ class SubscriberClass(Node):
         self.stack_theta_blue = []
         self.stack_distance_blue = []
         
+
+        self.avg_vertex_distance = 0.0
+        self.avg_vertex_theta = 0.0
+
+        self.avg_blue_distance = 0.001
+        self.avg_blue_theta = 0.0
+        
+
 
     def listener_callback_1(self, msg):
         
@@ -511,10 +532,12 @@ class SubscriberClass(Node):
                 print("")
                 print("self.stack_distance_blue : \n"+str(self.stack_distance_blue))
                 print("avg self.stack_distance_blue : "+str(sum(self.stack_distance_blue)/self.round_scan_init))
-        
+
+
+                # self.avg_blue_x = 
+                
                 self.avg_scan = 0
-                SubscriberClass().destroy_node()
-                rclpy.shutdown()
+
 
     def listener_callback_2(self, msg):
         # print(msg.data)
@@ -541,7 +564,20 @@ class SubscriberClass(Node):
         
     
     def timer_callback(self):
+        msg_vertex_distance= Float32()
+        msg_vertex_theta= Float32()
+        msg_blue_distance = Float32()
+        msg_blue_theta = Float32()
 
+
+
+        msg_blue_distance.data = self.avg_blue_distance
+
+        self.vertex_distance_publisher.publish(msg_vertex_distance)
+        self.vertex_theta_publisher.publish(msg_vertex_theta)
+        self.blue_distance_publisher.publish(msg_blue_distance)
+        self.blue_theta_publisher.publish(msg_blue_theta)
+        
         pass
         
 
@@ -550,7 +586,7 @@ def main(args=None):
     # print("3")
     rclpy.init(args=args)
 
-    subscriber = SubscriberClass()
+    subscriber = SCAN()
 
     rclpy.spin(subscriber)
 
