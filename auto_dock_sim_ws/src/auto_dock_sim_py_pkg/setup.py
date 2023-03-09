@@ -21,7 +21,10 @@ setup(
     entry_points={
         'console_scripts': [
             'my_node = auto_dock_sim_py_pkg.my_node:main',
-            '01_pub = auto_dock_sim_py_pkg.01_pub:main'
+            '01_pub = auto_dock_sim_py_pkg.01_pub:main',
+            '01_sub = auto_dock_sim_py_pkg.01_sub:main',
+            'st_scan = auto_dock_sim_py_pkg.st_scan:main',
+            'st_move = auto_dock_sim_py_pkg.st_move:main'
         ],
     },
 )

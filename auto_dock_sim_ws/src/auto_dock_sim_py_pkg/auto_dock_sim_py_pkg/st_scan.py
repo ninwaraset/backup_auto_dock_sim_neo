@@ -60,7 +60,7 @@ class SCAN(Node):
         # self.stack_y = []
         self.round_scan_init = 50
         self.round_scan = self.round_scan_init
-        self.avg_scan = 1
+        self.key_avg_scan = 1
         self.stack_theta_vertex = []
         self.stack_distance_vertex = []
         self.stack_theta_blue = []
@@ -512,31 +512,34 @@ class SCAN(Node):
         if self.round_scan > 0:
             # print("SCAN") 
             print("---------------------------------------------------------------------------------------------------------------------------------")
-            print("\n>o| scan round : "+str(11-self.round_scan))
+            print("\n>o| scan round : "+str((self.round_scan_init+1)-self.round_scan))
             call_scan()
             
         elif self.round_scan == 0:
-            if self.avg_scan > 0:
+            if self.key_avg_scan > 0:
                 print("\n ----- avg ----- \n")
                 print("stack_theta_vertex : \n"+str(self.stack_theta_vertex))
-                print("avg stack_theta_vertex: "+str(sum(self.stack_theta_vertex)/self.round_scan_init))
+                self.avg_vertex_distance = (sum(self.stack_theta_vertex)/self.round_scan_init)
+                print("avg stack_theta_vertex: "+str(self.avg_vertex_distance))
                 
                 print("")
                 print("stack_distance_vertex : \n"+str(self.stack_distance_vertex))
-                print("avg stack_distance_vertex: "+str(sum(self.stack_distance_vertex)/self.round_scan_init))
+                self.avg_vertex_theta =(sum(self.stack_distance_vertex)/self.round_scan_init)
+                print("avg stack_distance_vertex: "+str(self.avg_vertex_theta))
 
                 print("")
                 print("stack_theta_blue : \n"+str(self.stack_theta_blue))
-                print("avg stack_theta_blue : "+str(sum(self.stack_theta_blue)/self.round_scan_init))
+                self.avg_blue_distance = (sum(self.stack_theta_blue)/self.round_scan_init)
+                print("avg stack_theta_blue : "+str(self.avg_blue_distance))
 
                 print("")
                 print("self.stack_distance_blue : \n"+str(self.stack_distance_blue))
-                print("avg self.stack_distance_blue : "+str(sum(self.stack_distance_blue)/self.round_scan_init))
+                self.avg_blue_theta = (sum(self.stack_distance_blue)/self.round_scan_init)
+                print("avg self.stack_distance_blue : "+str(self.avg_blue_theta))
 
 
-                # self.avg_blue_x = 
                 
-                self.avg_scan = 0
+                self.key_avg_scan = 0
 
 
     def listener_callback_2(self, msg):
@@ -548,16 +551,7 @@ class SCAN(Node):
         pass
 
 
-    def listener_callback_3(self, msg):
-        pass
-        # self.list_amcl_linear[0] = msg.pose.pose.position.x
-        # self.list_amcl_linear[1] = msg.pose.pose.position.y
-        # self.list_amcl_linear[2] = msg.pose.pose.position.z
-        # self.list_amcl_angular[0] = msg.pose.pose.orientation.x
-        # self.list_amcl_angular[1] = msg.pose.pose.orientation.y
-        # self.list_amcl_angular[2] = msg.pose.pose.orientation.z
 
-        # print("pose current : "+str(self.list_amcl_linear)+str(self.list_amcl_angular))
 
 
 
@@ -569,9 +563,11 @@ class SCAN(Node):
         msg_blue_distance = Float32()
         msg_blue_theta = Float32()
 
-
-
+        msg_vertex_distance.data = self.avg_vertex_distance
+        msg_vertex_theta.data = self.avg_vertex_theta
+        
         msg_blue_distance.data = self.avg_blue_distance
+        msg_blue_theta.data = self.avg_blue_theta
 
         self.vertex_distance_publisher.publish(msg_vertex_distance)
         self.vertex_theta_publisher.publish(msg_vertex_theta)

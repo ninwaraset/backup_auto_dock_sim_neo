@@ -4,21 +4,27 @@ from rclpy.node import Node
 from geometry_msgs.msg import Twist
 from rclpy.clock import Clock
 import math
+from sensor_msgs.msg import LaserScan
+from std_msgs.msg import Float32
 
 class Dummy(Node):
     def __init__(self):
         super().__init__('node_name')
         self.cmd_publisher = self.create_publisher(Twist,'/cmd_vel',10)
-        # self.cmd_publisher = self.create_publisher(Twist,'/turtle1/cmd_vel',10)
-        # self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
+
+        self.subscription_1 = self.create_subscription(Float32,'/vertex_distance',self.listener_callback_1,10)
+        self.subscription_2 = self.create_subscription(Float32,'/vertex_theta',self.listener_callback_2,10)
+        self.subscription_3 = self.create_subscription(Float32,'/blue_distance',self.listener_callback_3,10)
+        self.subscription_4 = self.create_subscription(Float32,'/blue_theta',self.listener_callback_4,10)
+
 
         print("st_move")
         distance_angular_move1 = -0.4742537548612439
         distance_linear_move1 = 1.1163597437568331
         speed_move1 = 0.02
-        self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
-        self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
-        self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
+        # self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
+        # self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
+        # self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
 
         # Dummy().destroy_node()
         # rclpy.shutdown()
@@ -104,7 +110,16 @@ class Dummy(Node):
     #     print(f"Current ROS 2 system time: "+str(nanoseconds)+" seconds")
 
     def listener_callback_1(self,msg):
-        print("msg_recived : " + str(msg))
+        print("msg_recived 1 : " + str(msg))
+        pass
+    def listener_callback_2(self,msg):
+        print("msg_recived 2 : " + str(msg))
+        pass
+    def listener_callback_3(self,msg):
+        print("msg_recived 3 : " + str(msg))
+        pass
+    def listener_callback_4(self,msg):
+        print("msg_recived 4 : " + str(msg))
         pass
         
 

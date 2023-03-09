@@ -1,0 +1,17 @@
+[3.974s] Invoking command in '/home/waraset/auto_dock_sim_ws/build/learning_tf2_py': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/learning_tf2_py/prefix_override:/home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/learning_tf2_py/build --no-deps install_data
+[4.988s] running develop
+[5.274s] running egg_info
+[5.275s] writing learning_tf2_py.egg-info/PKG-INFO
+[5.275s] writing dependency_links to learning_tf2_py.egg-info/dependency_links.txt
+[5.275s] writing entry points to learning_tf2_py.egg-info/entry_points.txt
+[5.275s] writing requirements to learning_tf2_py.egg-info/requires.txt
+[5.275s] writing top-level names to learning_tf2_py.egg-info/top_level.txt
+[5.321s] reading manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+[5.322s] writing manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+[5.390s] running build_ext
+[5.390s] Creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages/learning-tf2-py.egg-link (link to .)
+[5.391s] Installing static_turtle_tf2_broadcaster script to /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/learning_tf2_py
+[5.391s] 
+[5.392s] Installed /home/waraset/auto_dock_sim_ws/build/learning_tf2_py
+[5.392s] running install_data
+[5.450s] Invoked command in '/home/waraset/auto_dock_sim_ws/build/learning_tf2_py' returned '0': PYTHONPATH=/home/waraset/auto_dock_sim_ws/build/learning_tf2_py/prefix_override:/home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py develop --editable --build-directory /home/waraset/auto_dock_sim_ws/build/learning_tf2_py/build --no-deps install_data
