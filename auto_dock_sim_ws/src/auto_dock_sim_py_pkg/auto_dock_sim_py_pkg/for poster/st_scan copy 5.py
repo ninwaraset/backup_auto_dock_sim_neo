@@ -60,7 +60,7 @@ class SCAN(Node):
         # self.list_amcl_angular = [0.0,0.0,0.0]
         # self.stack_x = []
         # self.stack_y = []
-        self.round_scan_init = 50
+        self.round_scan_init = 1
         self.round_scan = self.round_scan_init
         self.key_avg_scan = 1
         self.stack_theta_vertex = []
@@ -75,7 +75,7 @@ class SCAN(Node):
         self.avg_blue_distance = 0.0
         self.avg_blue_theta = 0.0
         
-
+        self.color_list = ["r","b","g","k","m"]
 
     def listener_callback_1(self, msg):
         
@@ -108,7 +108,7 @@ class SCAN(Node):
             return x,y
 
 
-        def lidar_DBscan(x_list,y_list,eps_value=0.04,min_samples_value=5,show_plot = 1):
+        def lidar_DBscan(x_list,y_list,eps_value=0.04,min_samples_value=5,show_plot = 0):
             print("\n++ DB SCAN ++")
             lidar_list = []
             for i in range(len(x_list)):
@@ -210,13 +210,14 @@ class SCAN(Node):
                     theta_charger = math.atan(slope_charger)
                     print("  o--> theta_charger : "+str(theta_charger))
 
-
+                    
                     x_rot_z_list = []
                     y_rot_z_list = []
 
                     for j in range(len(cluster_dict[i])):
                         point_x = x_list[cluster_dict[i][j]]
                         point_y = y_list[cluster_dict[i][j]]
+                        plt.plot(point_x,point_y,"r.")
                         x_rot_z_list.append((point_x*math.cos(theta_charger)) + (point_y*math.sin(theta_charger)))
                         y_rot_z_list.append((point_y*math.cos(theta_charger)) - (point_x*math.sin(theta_charger)))
 
@@ -281,155 +282,14 @@ class SCAN(Node):
                 # print(x_list[0])
                 # print(line_dis_x)
                 # print(line_dis_y)
-                plt.plot(line_dis_x,line_dis_y,"#fdfa28",ls="--")
+                # plt.plot(line_dis_x,line_dis_y,"#fdfa28",ls="--")
                 
             # true_index_vertex_point_tri_of_cluster0
             # print("dis_list"+str(dis_list))
             return true_index_vertex_point_tri_of_cluster,label_cluster_charger,list_dif_line
 
 
-        def cal_theta_distance(x,y,origin_x=0,origin_y=0):
-            origin_dif_x = (origin_x - x)
-            origin_dif_y = (origin_y - y)
-            # origin_dif_x = abs(origin_x - x)
-            # origin_dif_y = abs(origin_y - y)
-            origin_pow_dif_x = origin_dif_x**2
-            origin_pow_dif_y = origin_dif_y**2
-            dis_origin = math.sqrt(origin_pow_dif_x + origin_pow_dif_y)
-            slope_origin = origin_dif_y/origin_dif_x 
-            theta_origin = math.atan(slope_origin)
-            # if abs(x) < 0.02:
-            #     theta_origin = 0
-            #     print(" in yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-            # else:
-            if (x < 0): 
-                # theta_origin =  - theta_origin
-                theta_origin = theta_origin + math.pi/2
-            else :
-                theta_origin = theta_origin - math.pi/2
-            # theta_origin = theta_origin - math.pi/2
-                
-            return dis_origin,theta_origin
-        
-
-        def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18,distance_blue= 0.4):
-            print("\n++ SET SUB GOAL ++")
-            plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
-            fig = plt.gcf()
-            ax = fig.gca()
-            circle1 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), radius_vertex,ls = "--", color='m', fill=False)
-            # circle3 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), 0.35, color='g', fill=False)
-            
-            # ax = plt.gca()
-            # ax.cla() # clear things for fresh plot
-            ax.add_patch(circle1)
-            # ax.add_patch(circle3)
-            
-            list_idx_charger = cluster_dict[label_charger]
-            itls_idx_list = []
-            for i in range(len(list_idx_charger)):
-                dif_x = x_list[idx_vtx_tri]-x_list[list_idx_charger[i]]
-                dif_y = y_list[idx_vtx_tri]-y_list[list_idx_charger[i]]
-                pow_dif_x = dif_x**2
-                pow_dif_y = dif_y**2
-                dis_xy = math.sqrt(pow_dif_x+pow_dif_y)
-                if dis_xy <= radius_vertex :
-                    itls_idx_list.append(list_idx_charger[i])
-
-            # print( itls_idx_list)
-            r_idx_list = []
-            l_idx_list = []
-            point_r_x = []
-            point_r_y = []
-            point_l_x = []
-            point_l_y = []
-
-            for i in range(len(itls_idx_list)):
-                if itls_idx_list[i] >= idx_vtx_tri:
-                    r_idx_list.append( itls_idx_list[i])
-                    point_r_x.append(x_list[itls_idx_list[i]])
-                    point_r_y.append(y_list[itls_idx_list[i]])
-                if itls_idx_list[i] <= idx_vtx_tri:
-                    l_idx_list.append( itls_idx_list[i])
-                    point_l_x.append(x_list[itls_idx_list[i]])
-                    point_l_y.append(y_list[itls_idx_list[i]])
-                    
-            # print("R : "+str(r_idx_list))
-            # print("L : "+str(l_idx_list))
-            # print(r_idx_list[-1])
-
-            ################## will change linear reg for real line *fix
-            line_r_x = [x_list[r_idx_list[0]],x_list[r_idx_list[-1]]]
-            line_r_y = [y_list[r_idx_list[0]],y_list[r_idx_list[-1]]]
-            # line_r_y = [y_list[r_idx_list[0]],y_list[idx_vtx_tri]]
-
-            line_l_x = [x_list[l_idx_list[0]],x_list[l_idx_list[-1]]]
-            line_l_y = [y_list[l_idx_list[0]],y_list[l_idx_list[-1]]]
-            # plt.xlim([-1.5, 1.5])
-            # plt.ylim([-0.5,1.5])
-            # plt.show()
-            # plt.cla()
-            # plt.plot(point_r_x,point_r_y,"g^")
-            # plt.plot(point_l_x,point_l_y,"y*")
-            plt.plot(line_r_x,line_r_y,"r",ls="--")
-            plt.plot(line_l_x,line_l_y,"b",ls= "--")
-            
-            line_base_clean_x = [x_list[l_idx_list[0]],x_list[r_idx_list[-1]]]
-            line_base_clean_y = [y_list[l_idx_list[0]],y_list[r_idx_list[-1]]]
-            plt.plot(line_base_clean_x,line_base_clean_y,color= "#6500d7",ls="--")
-            center_base_clean_x = sum( line_base_clean_x)/2
-            center_base_clean_y = sum( line_base_clean_y)/2
-            plt.plot(center_base_clean_x,center_base_clean_y,'k*')
-            
-            plt.plot([x_list[idx_vtx_tri],center_base_clean_x],[y_list[idx_vtx_tri],center_base_clean_y],'g',ls="-.")
-            slope_vg = (y_list[idx_vtx_tri]-center_base_clean_y)/(x_list[idx_vtx_tri]-center_base_clean_x)
-            theta_vg = math.atan(slope_vg)
-            print(" --> slope_vertex to center base : "+str(slope_vg))
-            print(" --> theta_vertex to center base  : "+str(theta_vg))
-
-            origin_x = 0
-            origin_y = 0
-
-            vertex_x = x_list[idx_vtx_tri]
-            vertex_y = y_list[idx_vtx_tri]
-
-            tran_x = vertex_x
-            tran_y = vertex_y
-
-            line_1_x = [origin_x,tran_x]
-            line_1_y = [origin_y,tran_y]
-
-
-            # theta_rot = -math.pi*2/3
-            # dist_rot = 1
-            if theta_vg >= 0 :
-                theta_rot = theta_vg - math.pi
-            else :
-                theta_rot =  theta_vg
-            dist_rot = distance_blue
-            circle2 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), dist_rot,ls = "--", color='g', fill=False)
-            ax.add_patch(circle2)
-
-            blue_x = dist_rot*math.cos(theta_rot) + tran_x
-            blue_y = dist_rot*math.sin(theta_rot) + tran_y
-            print(" --> sub_goal(blue_point) : "+str([blue_x,blue_y]))
-
-            line_2_x = [tran_x,blue_x]
-            line_2_y = [tran_y,blue_y]
-
-            line_3_x =  [origin_x,blue_x]
-            line_3_y =  [origin_y,blue_y]
-            
-            sub_goal = [blue_x,blue_y]
-            # plt.plot(origin_x,origin_y,marker="o",color="g")
-            # plt.plot(tran_x,tran_y,marker="^",color="r")
-            # plt.plot(line_1_x,line_1_y,ls = "-", color='y')
-
-            plt.plot(blue_x,blue_y,marker="*",color="b")
-            plt.plot(line_2_x,line_2_y,ls = "-.", color='#19e59e')
-            plt.plot(line_3_x,line_3_y,ls = "-", color='#FFA500')
-            # plt.show()
-            return sub_goal
+       
         
 
 ##########################################################################################################################################################################
@@ -444,68 +304,18 @@ class SCAN(Node):
 
 
             idx_vtx_tri,label_charger,list_dif_line = check_charger(x_list,y_list, cluster_dict)
-            plt.plot(0,0,"r^")
+            # plt.plot(0,0,"r^")
             
-            plt.plot([0,x_list[idx_vtx_tri]],[0,y_list[idx_vtx_tri]],"b")
+            # plt.plot([0,x_list[idx_vtx_tri]],[0,y_list[idx_vtx_tri]],"b")
             print("\n list of vertex tri angle charger : "+ str(list_dif_line))
             
             if list_dif_line == [] :
                 print("  _________________\n\n | ERROR NOT FONUD | \n  _________________\n")
             else:
                 print("  _______\n\n | FOUND | \n  _______\n")
-                plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r*")
+            
 
-                distance_vertex,theta_vertex = cal_theta_distance(x_list[idx_vtx_tri],y_list[idx_vtx_tri])
-
-                print("c-> theta before rotate in z axis : "+ str(theta_vertex))
-                # theta_vertex = theta_vertex-(math.pi)/2
-                # theta_vertex = theta_vertex-math.pi/2
-
-                print("c-> theta after rotate in z axis: "+ str(theta_vertex))
-
-                print("c-> xy vertex point : ",[x_list[idx_vtx_tri],y_list[idx_vtx_tri]])
-                print("c-> distance ,theta(radian) vertex point : ",[distance_vertex,theta_vertex])
-
-                theta_vertex_degree = ((theta_vertex*180)/math.pi)
-                print("c-> distance ,theta(degree) vertex point : ",[distance_vertex,theta_vertex_degree])
-
-                
-                # x_cal =r*math.cos(t) 
-                # y_cal = r*math.sin(t)
-                
-                # goal_x = x_list[idx_vtx_tri]
-                # goal_y = y_list[idx_vtx_tri]
-                # # print("c-> xy cal : ",[x_cal,y_cal])
-
-                # dis_origin,theta_origin = cal_theta_distance(x_list,y_list,idx_vtx_tri)
-
-                self.stack_theta_vertex.append(theta_vertex)
-                self.stack_distance_vertex.append(distance_vertex)
-                
-
-
-                blue_x,blue_y= set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri)
-                print("c->blue piont : "+str([blue_x,blue_y]))
-                distance_blue,theta_blue = cal_theta_distance(blue_x,blue_y)
-
-                # theta_blue = theta_blue
-
-                theta_blue_degree = ((theta_blue*180)/math.pi)
-
-
-
-                print("c-> theta_blue(radius) : "+str(theta_blue))
-                print("c-> theta_blue(degree) : "+str(theta_blue_degree))
-                print("c-> distance_blue : "+str(distance_blue))
-                # self.stack_theta_blue.append(theta_blue_degree)
-                self.stack_theta_blue.append(theta_blue)
-                self.stack_distance_blue.append(distance_blue)
-
-
-                # print(self.round_scan)
-                self.round_scan -= 1
-
-            # plt.show()
+            plt.show()
 
         # call_scan
         # plt.plot(x[index_vertex_point_tri_of_cluster],y[index_vertex_point_tri_of_cluster],"ro")

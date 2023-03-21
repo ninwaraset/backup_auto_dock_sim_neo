@@ -17,15 +17,23 @@ class Dummy(Node):
         self.subscription_3 = self.create_subscription(Float32,'/blue_distance',self.listener_callback_3,10)
         self.subscription_4 = self.create_subscription(Float32,'/blue_theta',self.listener_callback_4,10)
 
+        self.subscription_main = self.create_subscription(Float32,'/main',self.listener_callback_main,10)
 
-        print("st_move")
-        distance_angular_move1 = -0.4742537548612439
-        distance_linear_move1 = 1.1163597437568331
-        speed_move1 = 0.02
+        # print("st_move")
+
+        # distance_angular_move1 =  -0.47099855243640937
+
+        # distance_linear_move1 = 1.1163295358780199
+
+        # speed_move1 = 0.05
         # self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
         # self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
         # self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
+        self.avg_vertex_distance = 0.0
+        self.avg_vertex_theta = 0.0
 
+        self.avg_blue_distance = 0.0
+        self.avg_blue_theta = 0.0
         # Dummy().destroy_node()
         # rclpy.shutdown()
         # self.timer_period = 0.5
@@ -34,6 +42,9 @@ class Dummy(Node):
         # # clock = Clock()
         # now = Clock().now()
         # self.time1 = now.nanoseconds
+
+        self.key_1 = 1
+
 
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################       
@@ -51,7 +62,7 @@ class Dummy(Node):
             # print(""+str())
 
             current_distance = 0
-            print("current_distance : "+str(current_distance))
+            # print("current_distance : "+str(current_distance))
 
             msg = Twist()
             # 
@@ -71,7 +82,7 @@ class Dummy(Node):
             time_d = 0
             while(abs(current_distance) <abs(distance)):
                 # print("moving")
-                print("current_distance"+str(current_distance))
+                # print("current_distance"+str(current_distance))
                 #Publish the velocity
                 
                 self.cmd_publisher.publish(msg)
@@ -110,18 +121,40 @@ class Dummy(Node):
     #     print(f"Current ROS 2 system time: "+str(nanoseconds)+" seconds")
 
     def listener_callback_1(self,msg):
-        print("msg_recived 1 : " + str(msg))
+        # print("msg_recived 1 : " + str(msg))
+        self.avg_vertex_distance = msg.data
+        
         pass
     def listener_callback_2(self,msg):
-        print("msg_recived 2 : " + str(msg))
+        # print("msg_recived 2 : " + str(msg))
+        self.avg_vertex_theta = msg.data
+
         pass
     def listener_callback_3(self,msg):
-        print("msg_recived 3 : " + str(msg))
+        # print("msg_recived 3 : " + str(msg))
+        self.avg_blue_distance = msg.data
         pass
+
     def listener_callback_4(self,msg):
-        print("msg_recived 4 : " + str(msg))
+        # print("msg_recived 4 : " + str(msg))
+        self.avg_blue_theta = msg.data
         pass
+
+    def listener_callback_main(self,msg):
+        print("st_move")
         
+        # if [self.avg_blue_distance,self.avg_blue_theta] != [0.0,0.0]:
+        if self.key_1 == 1 :
+            distance_angular_move1 =  self.avg_blue_theta
+            distance_linear_move1 = self.avg_blue_distance
+            distance_angular_move2 =  self.avg_vertex_theta
+
+            speed_move1 = 0.05
+            self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
+            self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
+            self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
+            self.key_1=0
+        pass
 
 
 

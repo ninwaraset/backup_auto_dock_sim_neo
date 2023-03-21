@@ -1,0 +1,15 @@
+running develop
+running egg_info
+writing learning_tf2_py.egg-info/PKG-INFO
+writing dependency_links to learning_tf2_py.egg-info/dependency_links.txt
+writing entry points to learning_tf2_py.egg-info/entry_points.txt
+writing requirements to learning_tf2_py.egg-info/requires.txt
+writing top-level names to learning_tf2_py.egg-info/top_level.txt
+reading manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+writing manifest file 'learning_tf2_py.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/python3.8/site-packages/learning-tf2-py.egg-link (link to .)
+Installing static_turtle_tf2_broadcaster script to /home/waraset/auto_dock_sim_ws/install/learning_tf2_py/lib/learning_tf2_py
+
+Installed /home/waraset/auto_dock_sim_ws/build/learning_tf2_py
+running install_data

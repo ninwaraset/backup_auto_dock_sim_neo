@@ -1,4 +1,4 @@
-start_file = 200
+start_file = 1
 end_file = 360
 date_data = "01-02-66" #"DD-MM-YY"
 # break_al = 1
@@ -214,8 +214,8 @@ def check_charger(x_list,y_list, cluster_dict,threshold_base =0.50,e_base = 0.1,
                 check_line_l_pow_dif_x = check_line_l_dif_x**2
                 check_line_l_pow_dif_y = check_line_l_dif_y**2
                 check_line_l_dis = math.sqrt(check_line_l_pow_dif_x + check_line_l_pow_dif_y)
-                print("line l distance : "+str(check_line_l_dis))
-                print("line r distance : "+str(check_line_r_dis))
+                # print("line l distance : "+str(check_line_l_dis))
+                # print("line r distance : "+str(check_line_r_dis))
                 line_r_l_dif = abs(check_line_l_dis-check_line_r_dis)
                 # print("difference : " + str(line_r_l_dif) )
                 plt.plot(x_list[index_end_point_cluster],y_list[index_end_point_cluster],'ks')
