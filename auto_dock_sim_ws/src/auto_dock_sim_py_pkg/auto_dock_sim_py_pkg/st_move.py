@@ -18,6 +18,12 @@ class Dummy(Node):
         self.subscription_4 = self.create_subscription(Float32,'/blue_theta',self.listener_callback_4,10)
 
         self.subscription_main = self.create_subscription(Float32,'/main',self.listener_callback_main,10)
+        
+        self.repeat_pub = self.create_publisher(Float32,'/repeat',10)
+        # self.timer = self.create_timer(0.1,self.timer_calback)
+
+        # self.repeat_recive_sub = self.create_subscription(Float32,'/repeat_c2',self.listener_callback_repeat,10)
+        self.key_repeat = False
 
         # print("st_move")
 
@@ -30,10 +36,16 @@ class Dummy(Node):
         # self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
         # self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
         self.avg_vertex_distance = 0.0
+        
         self.avg_vertex_theta = 0.0
 
         self.avg_blue_distance = 0.0
+        self.avg_blue_distance_old = 0.0
+
         self.avg_blue_theta = 0.0
+        self.avg_blue_theta_old = 0.0
+
+
         # Dummy().destroy_node()
         # rclpy.shutdown()
         # self.timer_period = 0.5
@@ -42,9 +54,10 @@ class Dummy(Node):
         # # clock = Clock()
         # now = Clock().now()
         # self.time1 = now.nanoseconds
+        
 
         self.key_1 = 1
-
+        self.key_st = 1
 
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################       
@@ -98,9 +111,11 @@ class Dummy(Node):
             msg.angular.z = 0.0
             msg.linear.x = 0.0
             #Force the robot to stop
-            self.cmd_publisher.publish(msg)
-            print("time_d : "+str(time_d))
-            print("current_distance : "+str(current_distance))
+            # self.cmd_publisher.publish(msg)
+            # print("time_d : "+str(time_d))
+            # print("current_distance : "+str(current_distance))
+            
+            
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################       
 ##########################################################################################################################################################################
@@ -142,19 +157,141 @@ class Dummy(Node):
 
     def listener_callback_main(self,msg):
         print("st_move")
-        
-        # if [self.avg_blue_distance,self.avg_blue_theta] != [0.0,0.0]:
-        if self.key_1 == 1 :
-            distance_angular_move1 =  self.avg_blue_theta
-            distance_linear_move1 = self.avg_blue_distance
-            distance_angular_move2 =  self.avg_vertex_theta
+        # blue  
+        if self.key_st == 1:
+            print("-- self.avg_blue_theta")
+            print(self.avg_blue_theta)
+            print("-- self.avg_blue_theta_old")
+            print(self.avg_blue_theta_old)
+            if self.avg_blue_theta != self.avg_blue_theta_old:
+                print("------ move theta blue")
 
-            speed_move1 = 0.05
-            self.move(type_move="angular",distance=distance_angular_move1,speed=speed_move1)
-            self.move(type_move="linear",distance=distance_linear_move1,speed=speed_move1)
-            self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
-            self.key_1=0
+                # self.move(type_move="linear",distance=0.1,speed=0.05)
+                # if self.avg_blue_theta > 0.5:
+                self.key_repeat = 1
+                if self.avg_blue_theta > 0.05:
+                    print("blue L 0.1")
+                    self.move(type_move="angular",distance=0.1,speed=0.05)
+                    # self.move(type_move="angular",distance=0,speed=0)
+                if self.avg_blue_theta > 0.01:
+                    print("blue L 0.01")
+                    self.move(type_move="angular",distance=0.01,speed=0.001)
+
+                    
+                # if self.avg_blue_theta > 0.01:
+                #     print("blue L 0.01")
+                #     self.move(type_move="angular",distance=0.01,speed=0.001)
+                    
+                # elif self.avg_blue_theta < -0.05:
+                #     self.move(type_move="angular",distance=-0.1,speed=0.05)
+                else:
+                    print("exit****************************************")
+                    self.key_repeat = 0 
+                    
+                    
+                msg = Float32()
+                if self.key_repeat == 0 :
+                    msg.data = 0.0
+                else :
+                    msg.data = 1.0
+                print("reccord")
+                self.avg_blue_theta_old = self.avg_blue_theta
+            if self.avg_blue_theta < 0.005 :
+                self.key_st = 2 
+                
+        if self.key_st == 2 :
+            print("-- self.avg_blue_distance")
+            print(self.avg_blue_distance)
+            print("-- self.avg_blue_distance_old")
+            print(self.avg_blue_distance_old)
+            if self.avg_blue_distance != self.avg_blue_distance_old:
+                print("------ move distance blue")
+
+                # self.move(type_move="linear",distance=0.1,speed=0.05)
+                # if self.avg_blue_theta > 0.5:
+                self.key_repeat = 1
+                if self.avg_blue_distance > 0.05:
+                    print("blue L 0.1")
+                    self.move(type_move="linear",distance=0.1,speed=0.05)
+                    # self.move(type_move="angular",distance=0,speed=0)
+                if self.avg_blue_distance > 0.01:
+                    print("blue L 0.01")
+                    self.move(type_move="linear",distance=0.01,speed=0.001)
+
+                    
+                # if self.avg_blue_theta > 0.01:
+                #     print("blue L 0.01")
+                #     self.move(type_move="angular",distance=0.01,speed=0.001)
+                    
+                # elif self.avg_blue_theta < -0.05:
+                #     self.move(type_move="angular",distance=-0.1,speed=0.05)
+                else:
+                    print("exit****************************************")
+                    self.key_repeat = 0 
+                    
+                    
+                msg = Float32()
+                if self.key_repeat == 0 :
+                    msg.data = 0.0
+                else :
+                    msg.data = 1.0
+                print("reccord")
+                self.avg_blue_distance_old = self.avg_blue_distance
+            if self.avg_blue_distance < 0.005 :
+                self.key_st = 3
+
+        self.repeat_pub.publish(msg)
+        print("call "+ str(msg.data))
+        print("self.key_st"+str(self.key_st))
         pass
+
+        # if [self.avg_blue_distance,self.avg_blue_theta] != [0.0,0.0]:
+        # if self.key_1 == 1 :
+        # if abs(self.avg_blue_theta) > 0.05 :
+        #     # distance_angular_move1 =  self.avg_blue_theta
+        #     # distance_linear_move1 = self.avg_blue_distance
+        #     # distance_angular_move2 =  self.avg_vertex_theta
+
+        #     # speed_move1 = 0.05
+        #     # self.move(type_move="angular",distance=0.05,speed=speed_move1)
+        #     # # self.move(type_move="linear",distance=1.0,speed=speed_move1)
+            
+        #     # # self.move(type_move="angular",distance=-distance_angular_move1,speed=speed_move1)
+        #     # self.key_1=0
+        #     msg = Float32()
+        #     if self.key_repeat :
+        #         msg.data = 0.0
+        #     else :
+        #         msg.data = 1.0
+        #     # msg = Twist()
+        #     # msg.linear.x = 1.0
+        #     # msg.angular.z = 1.0
+        #     self.repeat_pub.publish(msg)
+        #     print("call "+ str(msg.data))
+            
+        #     print("moving")
+        
+        
+        
+
+        # pass
+    # def timer_calback(self):
+    #     msg = Float32()
+        
+    #     if self.key_repeat :
+    #         msg.data = 0.0
+    #     else :
+    #         msg.data = 1.0
+    #     # msg = Twist()
+    #     # msg.linear.x = 1.0
+    #     # msg.angular.z = 1.0
+    #     self.repeat_pub.publish(msg)
+    #     print("call "+ str(msg.data))
+
+    # def listener_callback_repeat(self,msg):
+    #     print("listen")
+    #     if msg.data == 1.0:
+    #         self.key_repeat = True
 
 
 

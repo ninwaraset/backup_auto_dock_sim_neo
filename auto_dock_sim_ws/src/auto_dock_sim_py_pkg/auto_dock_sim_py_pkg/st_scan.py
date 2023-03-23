@@ -30,6 +30,7 @@ class SCAN(Node):
         super().__init__('state_scan')
         self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
 
+        self.subscription_2 = self.create_subscription(Float32,'/repeat',self.listener_callback_2,10)
 
         
         self.vertex_distance_publisher = self.create_publisher(Float32,'/vertex_distance',10)
@@ -39,11 +40,12 @@ class SCAN(Node):
         self.blue_theta_publisher = self.create_publisher(Float32,'/blue_theta',10)
 
         self.main_pub = self.create_publisher(Float32,'/main',10)
-
+        self.r2_pub = self.create_publisher(Float32,'/repeat_c2',10)
         time_period_pub = 0.1
         self.timer = self.create_timer(time_period_pub,self.timer_callback)
-
-
+        
+        self.key_1 = False
+        self.lidar_msgs = LaserScan()
     
         # self.subscription_2 = self.create_subscription(String,'/nav/state',self.listener_callback_2,10)
         # self.subscription_3 = self.create_subscription(PoseWithCovarianceStamped,'/amcl_pose',self.listener_callback_3,10)
@@ -60,7 +62,7 @@ class SCAN(Node):
         # self.list_amcl_angular = [0.0,0.0,0.0]
         # self.stack_x = []
         # self.stack_y = []
-        self.round_scan_init = 50
+        self.round_scan_init = 10
         self.round_scan = self.round_scan_init
         self.key_avg_scan = 1
         self.stack_theta_vertex = []
@@ -76,6 +78,9 @@ class SCAN(Node):
         self.avg_blue_theta = 0.0
         
 
+    def listener_callback_3(self, msg):
+        self.lidar_msgs = msg
+        print(msg)
 
     def listener_callback_1(self, msg):
         
@@ -312,7 +317,7 @@ class SCAN(Node):
             return dis_origin,theta_origin
         
 
-        def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18,distance_blue= 0.4):
+        def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18,distance_blue= 0.7):
             print("\n++ SET SUB GOAL ++")
             plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
             fig = plt.gcf()
@@ -432,8 +437,8 @@ class SCAN(Node):
             return sub_goal
         
 
-##########################################################################################################################################################################
-##########################################################################################################################################################################       
+###########################################################################################################################################################################
+#########################################################################################################################################################################       
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################  
         def call_scan():
@@ -503,7 +508,7 @@ class SCAN(Node):
 
 
                 # print(self.round_scan)
-                self.round_scan -= 1
+                
 
             # plt.show()
 
@@ -511,45 +516,68 @@ class SCAN(Node):
         # plt.plot(x[index_vertex_point_tri_of_cluster],y[index_vertex_point_tri_of_cluster],"ro")
         
         # # pass
+        # print("11111111111111")
+        
+        if self.key_1 == True:
+            print("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
+            self.round_scan = self.round_scan_init
+            self.key_avg_scan = 1
+            self.stack_theta_vertex = []
+            self.stack_distance_vertex = []
+            self.stack_theta_blue = []
+            self.stack_distance_blue = []
+            self.key_1 = False
+
         if self.round_scan > 0:
-            # print("SCAN") 
+            print("SCAN") 
             print("---------------------------------------------------------------------------------------------------------------------------------")
             print("\n>o| scan round : "+str((self.round_scan_init+1)-self.round_scan))
             call_scan()
+            self.round_scan -= 1
             
+        
         elif self.round_scan == 0:
             if self.key_avg_scan > 0:
+                pass
                 print("\n ----- avg ----- \n")
                 print("stack_theta_vertex : \n"+str(self.stack_theta_vertex))
-                self.avg_vertex_distance = (sum(self.stack_theta_vertex)/self.round_scan_init)
-                print("avg stack_theta_vertex: "+str(self.avg_vertex_distance))
+                self.avg_vertex_theta = (sum(self.stack_theta_vertex)/self.round_scan_init)
+                print("avg stack_theta_vertex: "+str(self.avg_vertex_theta))
                 
                 print("")
                 print("stack_distance_vertex : \n"+str(self.stack_distance_vertex))
-                self.avg_vertex_theta =(sum(self.stack_distance_vertex)/self.round_scan_init)
-                print("avg stack_distance_vertex: "+str(self.avg_vertex_theta))
+                self.avg_vertex_distance =(sum(self.stack_distance_vertex)/self.round_scan_init)
+                print("avg stack_distance_vertex: "+str(self.avg_vertex_distance))
 
                 print("")
                 print("stack_theta_blue : \n"+str(self.stack_theta_blue))
-                self.avg_blue_distance = (sum(self.stack_theta_blue)/self.round_scan_init)
-                print("avg stack_theta_blue : "+str(self.avg_blue_distance))
+                self.avg_blue_theta = (sum(self.stack_theta_blue)/self.round_scan_init)
+                print("avg stack_theta_blue : "+str(self.avg_blue_theta))
 
                 print("")
                 print("self.stack_distance_blue : \n"+str(self.stack_distance_blue))
-                self.avg_blue_theta = (sum(self.stack_distance_blue)/self.round_scan_init)
-                print("avg self.stack_distance_blue : "+str(self.avg_blue_theta))
+                self.avg_blue_distance = (sum(self.stack_distance_blue)/self.round_scan_init)
+                print("avg self.stack_distance_blue : "+str(self.avg_blue_distance))
 
-                plt.show()
-                
+                # plt.show()
+                print("**************************************************************************************************")
                 self.key_avg_scan = 0
+            
 
 
     def listener_callback_2(self, msg):
+        pass
         # print(msg.data)
-        if self.key_1 == False:
-            print(msg.data)
-        if msg.data == 'success':
+        # if self.key_1 == False:
+        #     print(msg.data)
+
+        
+        if msg.data == 1.0:
+            print("listen move ")
             self.key_1 = True
+            # msg_r2 = Float32()
+            # msg_r2.data = 1.0
+            # self.r2_pub.publish(msg_r2)
         pass
 
 
@@ -560,6 +588,7 @@ class SCAN(Node):
         
     
     def timer_callback(self):
+
         msg_vertex_distance= Float32()
         msg_vertex_theta= Float32()
         msg_blue_distance = Float32()
