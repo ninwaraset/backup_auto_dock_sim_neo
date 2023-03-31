@@ -69,10 +69,9 @@ class SCAN(Node):
         self.round_scan = self.round_scan_init
         self.key_avg_scan = 1
         self.stack_theta_vertex = [0.0,0.0,0.0,0.0]
-
-        self.stack_distance_vertex = [0.0,0.0,0.0,0.0]
-        self.stack_theta_blue = [0.0,0.0,0.0,0.0]
-        self.stack_distance_blue = [0.0,0.0,0.0,0.0]
+        self.stack_distance_vertex = [[0],[0],[0],[0]]
+        self.stack_theta_blue = [[0],[0],[0],[0]]
+        self.stack_distance_blue = [[0],[0],[0],[0]]
         
 
         self.avg_vertex_distance = 0.0
@@ -81,7 +80,7 @@ class SCAN(Node):
         self.avg_blue_distance = 0.0
         self.avg_blue_theta = 0.0
         self.T_x_lidar_baselink = 0
-        self.T_y_lidar_baselink = 0.23
+        self.T_y_lidar_baselink = 0
 
         self.key_pub_to_move = 4
 
@@ -599,28 +598,8 @@ class SCAN(Node):
             self.avg_blue_distance = (sum(self.stack_distance_blue)/len(self.stack_theta_blue))
             print("avg stack_distance_blue: "+str(self.avg_blue_distance))
 
-        # plt.show()
+            plt.show()
                 
-        # self.key_avg_scan = 0
-
-
-        
-            msg_vertex_distance= Float32()
-            msg_vertex_theta= Float32()
-            msg_blue_distance = Float32()
-            msg_blue_theta = Float32()
-            
-
-            msg_vertex_distance.data = self.avg_vertex_distance
-            msg_vertex_theta.data = self.avg_vertex_theta
-            
-            msg_blue_distance.data = self.avg_blue_distance
-            msg_blue_theta.data = self.avg_blue_theta
-
-            self.vertex_distance_publisher.publish(msg_vertex_distance)
-            self.vertex_theta_publisher.publish(msg_vertex_theta)
-            self.blue_distance_publisher.publish(msg_blue_distance)
-            self.blue_theta_publisher.publish(msg_blue_theta)
         else:
             print("waiting data...")
         # msg_main = Float32()

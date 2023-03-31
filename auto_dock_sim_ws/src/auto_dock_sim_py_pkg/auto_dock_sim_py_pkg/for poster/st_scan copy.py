@@ -60,7 +60,7 @@ class SCAN(Node):
         # self.list_amcl_angular = [0.0,0.0,0.0]
         # self.stack_x = []
         # self.stack_y = []
-        self.round_scan_init = 1
+        self.round_scan_init = 5
         self.round_scan = self.round_scan_init
         self.key_avg_scan = 1
         self.stack_theta_vertex = []
