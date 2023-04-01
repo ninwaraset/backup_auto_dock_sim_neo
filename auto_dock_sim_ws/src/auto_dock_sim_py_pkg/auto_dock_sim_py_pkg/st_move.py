@@ -18,19 +18,19 @@ class MOVE(Node):
         self.subscription_4 = self.create_subscription(Float32,'/blue_theta',self.listener_callback_3,10)
         self.subscription_3 = self.create_subscription(Float32,'/blue_distance',self.listener_callback_4,10)
         
-
+        self.lock_blue_pub = self.create_publisher(Float32,'/lock_blue',10)
 
         time_period_1 = 0.1
         self.timer_1 = self.create_timer(time_period_1,self.timer_1_callback)
         
 
 
-        self.avg_vertex_theta = 99
-        self.avg_vertex_distance = 99
+        self.avg_vertex_theta = 0.0
+        self.avg_vertex_distance = 0.0
         
 
-        self.avg_blue_distance = 99
-        self.avg_blue_theta = 99
+        self.avg_blue_distance = 0.0
+        self.avg_blue_theta = 0.0
         
 
 
@@ -45,7 +45,9 @@ class MOVE(Node):
     def listener_callback_1(self,msg):
         # print("msg_recived 1 : " + str(msg))
         self.avg_vertex_theta = msg.data
-        self.key_st = 1
+        
+        if self.key_st == 0:
+            self.key_st = 1
         pass
 
     def listener_callback_2(self,msg):
@@ -72,7 +74,7 @@ class MOVE(Node):
 
 
     def timer_1_callback(self):
-
+        
         
         print("avg stack_theta_vertex    :  "+str(self.avg_vertex_theta))
         print("avg stack_distance_vertex :  "+str(self.avg_vertex_distance))
@@ -81,32 +83,96 @@ class MOVE(Node):
         print("")
         print("st : " + str(self.key_st))
 
-        if self.key_st == 1:
+        
+        msg_cmd_vel = Twist()
+        msg_lock_blue = Float32()
 
+
+        if self.key_st == 1:
+            
+        
             kp_1 = 0.1
             e_1 = self.avg_blue_theta
-            msg = Twist()
-            msg.angular.z = e_1*kp_1
-            self.cmd_publisher.publish(msg)
-            if e_1 < 0.05 and e_1 > -0.05 :
+            msg_cmd_vel.angular.z = e_1*kp_1
+            
+
+            msg_lock_blue.data = 0.0
+
+            if e_1 < 0.1 and e_1 > -0.1 :
                 self.key_st = 2
+                msg_cmd_vel.linear.x = 0.0
+                msg_cmd_vel.angular.z = 0.0
+
 
 
         elif self.key_st == 2:
-            pass
+            
+            
             kp_2_1 = 0.1
             e_2_1 = self.avg_blue_theta
-            msg = Twist()
-            msg.angular.z = e_2_1*kp_2_1
-            self.cmd_publisher.publish(msg)
-
+            msg_cmd_vel.angular.z = e_2_1*kp_2_1
+        
             kp_2_2 = 0.05
             e_2_2 = self.avg_blue_distance
-            msg = Twist()
-            msg.linear.x = e_2_2*kp_2_2
-            self.cmd_publisher.publish(msg)
-            if e_2_2 < 0.05 and e_2_2 > -0.05 :
+            msg_cmd_vel.linear.x = e_2_2*kp_2_2
+            
+            msg_lock_blue.data = 0.0
+
+            if e_2_2 < 0.1 and e_2_2 > -0.1 :
                 self.key_st = 3
+
+                msg_cmd_vel.linear.x = 0.0
+                msg_cmd_vel.angular.z = 0.0
+
+
+        elif self.key_st == 3:
+            
+        
+            kp_3 = 0.1
+            e_3 = self.avg_vertex_theta
+            msg_cmd_vel.angular.z = e_3*kp_3
+
+            msg_lock_blue.data = 1.0
+
+            if e_3 < 0.1 and e_3 > -0.1 :
+                self.key_st = 4
+                msg_cmd_vel.linear.x = 0.0
+                msg_cmd_vel.angular.z = 0.0
+
+
+        
+        elif self.key_st == 4:
+            
+            
+            kp_4_1 = 0.1
+            e_4_1 = self.avg_vertex_theta
+            msg_cmd_vel.angular.z = e_4_1*kp_4_1
+        
+            kp_4_2 = 0.05
+            e_4_2 = self.avg_vertex_distance -0.5
+            msg_cmd_vel.linear.x = e_4_2*kp_4_2
+
+            msg_lock_blue.data = 1.0
+            
+            if e_4_2 < 0.05 and e_4_2 > -0.05 :
+                self.key_st = 5
+
+                msg_cmd_vel.linear.x = 0.0
+                msg_cmd_vel.angular.z = 0.0
+
+
+
+            
+        elif self.key_st == 5:
+
+            msg_lock_blue.data = 1.0
+            msg_cmd_vel.linear.x = 0.0
+            msg_cmd_vel.angular.z = 0.0
+            print("  GOAL !!!! ")
+        
+        self.cmd_publisher.publish(msg_cmd_vel)
+        
+        self.lock_blue_pub.publish(msg_lock_blue)
         pass
 
 

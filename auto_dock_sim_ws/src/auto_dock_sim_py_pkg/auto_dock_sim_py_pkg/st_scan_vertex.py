@@ -30,7 +30,7 @@ class SCAN(Node):
         super().__init__('state_scan')
         self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
 
-        self.lock_blue_sub = self.create_subscription(Float32,'/lock_blue',self.listener_callback_2,10)
+
         
         self.vertex_distance_publisher = self.create_publisher(Float32,'/vertex_distance',10)
         self.vertex_theta_publisher = self.create_publisher(Float32,'/vertex_theta',10)
@@ -49,6 +49,22 @@ class SCAN(Node):
         self.lidar_msgs = LaserScan()
 
 
+    
+        # self.subscription_2 = self.create_subscription(String,'/nav/state',self.listener_callback_2,10)
+        # self.subscription_3 = self.create_subscription(PoseWithCovarianceStamped,'/amcl_pose',self.listener_callback_3,10)
+
+
+        # self.cmd_publisher = self.create_publisher(String, 'topic', 10)
+        # self.marker_publisher = self.create_publisher(Marker, 'marker', 10)
+        # self.timer = self.create_timer(0.1, self.timer_callback)
+        # self.key_1 = False
+        
+        # self.point_from_scan = []
+        # self.amcl_rot = Twist()
+        # self.list_amcl_linear = [0.0,0.0,0.0]
+        # self.list_amcl_angular = [0.0,0.0,0.0]
+        # self.stack_x = []
+        # self.stack_y = []
         self.round_scan_init = 1
         self.round_scan = self.round_scan_init
         self.key_avg_scan = 1
@@ -71,14 +87,16 @@ class SCAN(Node):
 
         self.key_bug_1 = 0
 
-        self.msg_lock_blue = 0.0
-
-
     def listener_callback_1(self, msg):
         self.lidar_msgs = msg
 
     def listener_callback_2(self, msg):
-        self.msg_lock_blue = msg.data 
+        # print(msg.data)
+        if self.key_1 == False:
+            print(msg.data)
+        if msg.data == 'success':
+            self.key_1 = True
+        pass
 
 
 
@@ -321,124 +339,7 @@ class SCAN(Node):
             return dis_origin,theta_origin
         
 
-        def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18,distance_blue= 1):
-            print("\n++ SET SUB GOAL ++")
-            plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
-            fig = plt.gcf()
-            ax = fig.gca()
-            circle1 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), radius_vertex,ls = "--", color='m', fill=False)
-            # circle3 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), 0.35, color='g', fill=False)
-            
-            # ax = plt.gca()
-            # ax.cla() # clear things for fresh plot
-            ax.add_patch(circle1)
-            # ax.add_patch(circle3)
-            
-            list_idx_charger = cluster_dict[label_charger]
-            itls_idx_list = []
-            for i in range(len(list_idx_charger)):
-                dif_x = x_list[idx_vtx_tri]-x_list[list_idx_charger[i]]
-                dif_y = y_list[idx_vtx_tri]-y_list[list_idx_charger[i]]
-                pow_dif_x = dif_x**2
-                pow_dif_y = dif_y**2
-                dis_xy = math.sqrt(pow_dif_x+pow_dif_y)
-                if dis_xy <= radius_vertex :
-                    itls_idx_list.append(list_idx_charger[i])
 
-            # print( itls_idx_list)
-            r_idx_list = []
-            l_idx_list = []
-            point_r_x = []
-            point_r_y = []
-            point_l_x = []
-            point_l_y = []
-
-            for i in range(len(itls_idx_list)):
-                if itls_idx_list[i] >= idx_vtx_tri:
-                    r_idx_list.append( itls_idx_list[i])
-                    point_r_x.append(x_list[itls_idx_list[i]])
-                    point_r_y.append(y_list[itls_idx_list[i]])
-                if itls_idx_list[i] <= idx_vtx_tri:
-                    l_idx_list.append( itls_idx_list[i])
-                    point_l_x.append(x_list[itls_idx_list[i]])
-                    point_l_y.append(y_list[itls_idx_list[i]])
-                    
-            # print("R : "+str(r_idx_list))
-            # print("L : "+str(l_idx_list))
-            # print(r_idx_list[-1])
-
-            ################## will change linear reg for real line *fix
-            # line_r_x = [x_list[r_idx_list[0]],x_list[r_idx_list[-1]]]
-            # line_r_y = [y_list[r_idx_list[0]],y_list[r_idx_list[-1]]]
-            # line_r_y = [y_list[r_idx_list[0]],y_list[idx_vtx_tri]]
-
-            # line_l_x = [x_list[l_idx_list[0]],x_list[l_idx_list[-1]]]
-            # line_l_y = [y_list[l_idx_list[0]],y_list[l_idx_list[-1]]]
-            # plt.xlim([-1.5, 1.5])
-            # plt.ylim([-0.5,1.5])
-            # plt.show()
-            # plt.cla()
-            # plt.plot(point_r_x,point_r_y,"g^")
-            # plt.plot(point_l_x,point_l_y,"y*")
-            # plt.plot(line_r_x,line_r_y,"r",ls="--")
-            # plt.plot(line_l_x,line_l_y,"b",ls= "--")
-            
-            line_base_clean_x = [x_list[l_idx_list[0]],x_list[r_idx_list[-1]]]
-            line_base_clean_y = [y_list[l_idx_list[0]],y_list[r_idx_list[-1]]]
-            plt.plot(line_base_clean_x,line_base_clean_y,color= "#6500d7",ls="--")
-            center_base_clean_x = sum( line_base_clean_x)/2
-            center_base_clean_y = sum( line_base_clean_y)/2
-            plt.plot(center_base_clean_x,center_base_clean_y,'k*')
-            
-            plt.plot([x_list[idx_vtx_tri],center_base_clean_x],[y_list[idx_vtx_tri],center_base_clean_y],'g',ls="-.")
-            slope_vg = (y_list[idx_vtx_tri]-center_base_clean_y)/(x_list[idx_vtx_tri]-center_base_clean_x)
-            theta_vg = math.atan(slope_vg)
-            print(" --> slope_vertex to center base : "+str(slope_vg))
-            print(" --> theta_vertex to center base  : "+str(theta_vg))
-
-            origin_x = 0
-            origin_y = 0
-
-            vertex_x = x_list[idx_vtx_tri]
-            vertex_y = y_list[idx_vtx_tri]
-
-            tran_x = vertex_x
-            tran_y = vertex_y
-
-            line_1_x = [origin_x,tran_x]
-            line_1_y = [origin_y,tran_y]
-
-
-            # theta_rot = -math.pi*2/3
-            # dist_rot = 1
-            if theta_vg >= 0 :
-                theta_rot = theta_vg - math.pi
-            else :
-                theta_rot =  theta_vg
-            dist_rot = distance_blue
-            circle2 = plt.Circle((x_list[idx_vtx_tri],y_list[idx_vtx_tri]), dist_rot,ls = "--", color='g', fill=False)
-            ax.add_patch(circle2)
-
-            blue_x = dist_rot*math.cos(theta_rot) + tran_x
-            blue_y = dist_rot*math.sin(theta_rot) + tran_y
-            print(" --> sub_goal(blue_point) : "+str([blue_x,blue_y]))
-
-            line_2_x = [tran_x,blue_x]
-            line_2_y = [tran_y,blue_y]
-
-            line_3_x =  [origin_x,blue_x]
-            line_3_y =  [origin_y,blue_y]
-            
-            sub_goal = [blue_x,blue_y]
-            # plt.plot(origin_x,origin_y,marker="o",color="g")
-            # plt.plot(tran_x,tran_y,marker="^",color="r")
-            # plt.plot(line_1_x,line_1_y,ls = "-", color='y')
-
-            plt.plot(blue_x,blue_y,marker="*",color="b")
-            plt.plot(line_2_x,line_2_y,ls = "-.", color='#19e59e')
-            plt.plot(line_3_x,line_3_y,ls = "-", color='#FFA500')
-            # plt.show()
-            return sub_goal
         
 
 ##########################################################################################################################################################################
@@ -492,47 +393,13 @@ class SCAN(Node):
 
                 # self.stack_theta_vertex.append(theta_vertex)
                 # self.stack_distance_vertex.append(distance_vertex)
-                # if distance_vertex > 0.05 and distance_vertex < -0.05:
-                #     self.key_bug_1 = 1
-
-                if self.msg_lock_blue == 0:
-                    blue_x,blue_y= set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri)
-                    print("c->blue piont : "+str([blue_x,blue_y]))
-                    distance_blue,theta_blue = cal_theta_distance(blue_x,blue_y)
-
-                    # theta_blue = theta_blue
-
-                    theta_blue_degree = ((theta_blue*180)/math.pi)
-
-                    
-
-                    print("c-> theta_blue(radius) : "+str(theta_blue))
-                    print("c-> theta_blue(degree) : "+str(theta_blue_degree))
-                    print("c-> distance_blue : "+str(distance_blue))
-
-
-                    print("----------------------------------00000000---------------------------------")
-                    print("----------------------------------00000000---------------------------------")
-                    print("----------------------------------00000000---------------------------------")
-
-
-                    # self.stack_theta_blue.append(theta_blue_degree)
-                    # self.stack_theta_blue.append(theta_blue)
-                    # self.stack_distance_blue.append(distance_blue)
-                else:
-                    theta_blue = 0.0
-                    distance_blue = 0.0
-                    print("----------------------------------1111111---------------------------------")
-                    print("----------------------------------1111111---------------------------------")
-                    print("----------------------------------1111111---------------------------------")
-
-
-            return theta_vertex,distance_vertex,theta_blue,distance_blue
+                
+            return theta_vertex,distance_vertex
 
 ##########################################################################################################################################################################       
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################  
-        theta_vertex,distance_vertex,theta_blue,distance_blue = call_scan()
+        theta_vertex,distance_vertex= call_scan()
         # plt.show()
         
         self.stack_theta_vertex[3] = self.stack_theta_vertex[2]
@@ -543,13 +410,6 @@ class SCAN(Node):
         self.stack_distance_vertex[2] = self.stack_distance_vertex[1]
         self.stack_distance_vertex[1] = self.stack_distance_vertex[0]
 
-        self.stack_theta_blue[3] = self.stack_theta_blue[2]
-        self.stack_theta_blue[2] = self.stack_theta_blue[1]
-        self.stack_theta_blue[1] = self.stack_theta_blue[0]
-
-        self.stack_distance_blue[3] = self.stack_distance_blue[2]
-        self.stack_distance_blue[2] = self.stack_distance_blue[1]
-        self.stack_distance_blue[1] = self.stack_distance_blue[0]
         
         print("moving stack data")
 
@@ -559,9 +419,6 @@ class SCAN(Node):
 
             self.stack_distance_vertex[0] = distance_vertex
 
-            self.stack_theta_blue[0] = theta_blue
-            
-            self.stack_distance_blue[0] = distance_blue
             print("reccord new stack data")
             self.key_pub_to_move -= 1
         else :
@@ -589,15 +446,6 @@ class SCAN(Node):
             print("avg stack_distance_vertex: "+str(self.avg_vertex_distance))
 
 
-            print("stack_theta_blue : \n"+str(self.stack_theta_blue))
-            self.avg_blue_theta =(sum(self.stack_theta_blue)/len(self.stack_theta_blue))
-            print("avg stack_theta_blue: "+str(self.avg_blue_theta))
-            
-            print("")
-            print("stack_distance_blue : \n"+str(self.stack_distance_blue))
-            self.avg_blue_distance = (sum(self.stack_distance_blue)/len(self.stack_theta_blue))
-            print("avg stack_distance_blue: "+str(self.avg_blue_distance))
-
         # plt.show()
                 
         # self.key_avg_scan = 0
@@ -606,20 +454,15 @@ class SCAN(Node):
         
             msg_vertex_distance= Float32()
             msg_vertex_theta= Float32()
-            msg_blue_distance = Float32()
-            msg_blue_theta = Float32()
+
             
 
             msg_vertex_distance.data = self.avg_vertex_distance
             msg_vertex_theta.data = self.avg_vertex_theta
             
-            msg_blue_distance.data = self.avg_blue_distance
-            msg_blue_theta.data = self.avg_blue_theta
-
             self.vertex_distance_publisher.publish(msg_vertex_distance)
             self.vertex_theta_publisher.publish(msg_vertex_theta)
-            self.blue_distance_publisher.publish(msg_blue_distance)
-            self.blue_theta_publisher.publish(msg_blue_theta)
+
         else:
             print("waiting data...")
         # msg_main = Float32()

@@ -30,7 +30,7 @@ class SCAN(Node):
         super().__init__('state_scan')
         self.subscription_1 = self.create_subscription(LaserScan,'/scan',self.listener_callback_1,10)
 
-        self.lock_blue_sub = self.create_subscription(Float32,'/lock_blue',self.listener_callback_2,10)
+
         
         self.vertex_distance_publisher = self.create_publisher(Float32,'/vertex_distance',10)
         self.vertex_theta_publisher = self.create_publisher(Float32,'/vertex_theta',10)
@@ -49,6 +49,22 @@ class SCAN(Node):
         self.lidar_msgs = LaserScan()
 
 
+    
+        # self.subscription_2 = self.create_subscription(String,'/nav/state',self.listener_callback_2,10)
+        # self.subscription_3 = self.create_subscription(PoseWithCovarianceStamped,'/amcl_pose',self.listener_callback_3,10)
+
+
+        # self.cmd_publisher = self.create_publisher(String, 'topic', 10)
+        # self.marker_publisher = self.create_publisher(Marker, 'marker', 10)
+        # self.timer = self.create_timer(0.1, self.timer_callback)
+        # self.key_1 = False
+        
+        # self.point_from_scan = []
+        # self.amcl_rot = Twist()
+        # self.list_amcl_linear = [0.0,0.0,0.0]
+        # self.list_amcl_angular = [0.0,0.0,0.0]
+        # self.stack_x = []
+        # self.stack_y = []
         self.round_scan_init = 1
         self.round_scan = self.round_scan_init
         self.key_avg_scan = 1
@@ -71,14 +87,16 @@ class SCAN(Node):
 
         self.key_bug_1 = 0
 
-        self.msg_lock_blue = 0.0
-
-
     def listener_callback_1(self, msg):
         self.lidar_msgs = msg
 
     def listener_callback_2(self, msg):
-        self.msg_lock_blue = msg.data 
+        # print(msg.data)
+        if self.key_1 == False:
+            print(msg.data)
+        if msg.data == 'success':
+            self.key_1 = True
+        pass
 
 
 
@@ -322,6 +340,18 @@ class SCAN(Node):
         
 
         def set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri,radius_vertex = 0.18,distance_blue= 1):
+            # print("-------------------------------------------------")
+            # print(x_list)
+            # print("")
+            # print(y_list)
+            # print("")
+            # print(label_charger)
+            # print("")
+            # print(idx_vtx_tri)
+            # print("")
+
+
+
             print("\n++ SET SUB GOAL ++")
             plt.plot(x_list[idx_vtx_tri],y_list[idx_vtx_tri],"r^")
             fig = plt.gcf()
@@ -352,13 +382,16 @@ class SCAN(Node):
             point_r_y = []
             point_l_x = []
             point_l_y = []
-
+            print("itls_idx_list")
+            print(itls_idx_list)
             for i in range(len(itls_idx_list)):
                 if itls_idx_list[i] >= idx_vtx_tri:
+                    print("rrrr")
                     r_idx_list.append( itls_idx_list[i])
                     point_r_x.append(x_list[itls_idx_list[i]])
                     point_r_y.append(y_list[itls_idx_list[i]])
                 if itls_idx_list[i] <= idx_vtx_tri:
+                    print("llll")
                     l_idx_list.append( itls_idx_list[i])
                     point_l_x.append(x_list[itls_idx_list[i]])
                     point_l_y.append(y_list[itls_idx_list[i]])
@@ -382,9 +415,17 @@ class SCAN(Node):
             # plt.plot(point_l_x,point_l_y,"y*")
             # plt.plot(line_r_x,line_r_y,"r",ls="--")
             # plt.plot(line_l_x,line_l_y,"b",ls= "--")
-            
+            print([l_idx_list])
+            print(x_list[l_idx_list[0]])
+            print(x_list[l_idx_list[-1]])
+
             line_base_clean_x = [x_list[l_idx_list[0]],x_list[r_idx_list[-1]]]
             line_base_clean_y = [y_list[l_idx_list[0]],y_list[r_idx_list[-1]]]
+
+            print("-----------------------------------------------------------------------------")
+            print("-----------------------------------------------------------------------------")
+            print("-----------------------------------------------------------------------------")
+            print(line_base_clean_x )
             plt.plot(line_base_clean_x,line_base_clean_y,color= "#6500d7",ls="--")
             center_base_clean_x = sum( line_base_clean_x)/2
             center_base_clean_y = sum( line_base_clean_y)/2
@@ -492,10 +533,10 @@ class SCAN(Node):
 
                 # self.stack_theta_vertex.append(theta_vertex)
                 # self.stack_distance_vertex.append(distance_vertex)
-                # if distance_vertex > 0.05 and distance_vertex < -0.05:
-                #     self.key_bug_1 = 1
+                if distance_vertex > 0.05 and distance_vertex < -0.05:
+                    self.key_bug_1 = 1
 
-                if self.msg_lock_blue == 0:
+                if self.key_bug_1 == 0:
                     blue_x,blue_y= set_sub_goal(x_list,y_list,cluster_dict,label_charger,idx_vtx_tri)
                     print("c->blue piont : "+str([blue_x,blue_y]))
                     distance_blue,theta_blue = cal_theta_distance(blue_x,blue_y)
@@ -509,24 +550,12 @@ class SCAN(Node):
                     print("c-> theta_blue(radius) : "+str(theta_blue))
                     print("c-> theta_blue(degree) : "+str(theta_blue_degree))
                     print("c-> distance_blue : "+str(distance_blue))
-
-
-                    print("----------------------------------00000000---------------------------------")
-                    print("----------------------------------00000000---------------------------------")
-                    print("----------------------------------00000000---------------------------------")
-
-
                     # self.stack_theta_blue.append(theta_blue_degree)
                     # self.stack_theta_blue.append(theta_blue)
                     # self.stack_distance_blue.append(distance_blue)
                 else:
                     theta_blue = 0.0
                     distance_blue = 0.0
-                    print("----------------------------------1111111---------------------------------")
-                    print("----------------------------------1111111---------------------------------")
-                    print("----------------------------------1111111---------------------------------")
-
-
             return theta_vertex,distance_vertex,theta_blue,distance_blue
 
 ##########################################################################################################################################################################       
